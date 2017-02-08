@@ -65,5 +65,7 @@ void ATank::Fire()
 	}
 
 	// Spawn a projectile at the socket location of the barrel
-	GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+	auto Projectile = GetWorld()->SpawnActor<AProjectile>(ProjectileBlueprint, Barrel->GetSocketLocation(FName("Projectile")), Barrel->GetSocketRotation(FName("Projectile")));
+	Projectile->LaunchProjectile(LaunchSpeed);
+	
 }
