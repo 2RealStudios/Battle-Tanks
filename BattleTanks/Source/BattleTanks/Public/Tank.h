@@ -6,6 +6,7 @@
 #include "Tank.generated.h" // Put new includes above 
 
 class UTankBarrel;
+class UTankTrack;
 class UTankAimingComponent;
 class AProjectile;
 
