@@ -17,6 +17,6 @@ private:
 
 	virtual void Tick(float DeltaTime) override;
 
-	UPROPERTY(EditAnywhere, Category = AI)
+	UPROPERTY(EditAnywhere, Category = "AI")
 	float AcceptanceRadius = 3000;
 };
