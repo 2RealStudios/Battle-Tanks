@@ -5,6 +5,11 @@
 #include "Components/ActorComponent.h"
 #include "TankAimingComponent.generated.h"
 
+
+class UTankBarrel; // Forward Declaration
+class UTankTurret; // Forward Declaration
+class AProjectile;
+
 // Enum for aiming state
 UENUM()
 enum class EFiringState : uint8
@@ -13,9 +18,6 @@ enum class EFiringState : uint8
 	Aiming,
 	Locked
 };
-
-class UTankBarrel; // Forward Declaration
-class UTankTurret; // Forward Declaration
 
 // Hlds barrel's properties and Elevate method
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent))
@@ -32,8 +34,10 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
-protected:
+	UFUNCTION(BlueprintCallable, Category = "Firing")
+	void Fire();
 
+protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Aiming;
 
@@ -47,4 +51,12 @@ private:
 	// TODO remove when Fire is moved
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Setup")
+	TSubclassOf<AProjectile> ProjectileBlueprint;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Firing")
+	float ReloadTimeInSeconds = 3;
+	
+	double LastFireTime = 0;
 };
