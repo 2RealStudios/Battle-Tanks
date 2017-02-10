@@ -52,6 +52,8 @@ private:
 
 	void MoveBarrelTowards(FVector AimDirection);
 
+	bool IsBarrelMoving();
+
 	// TODO remove when Fire is moved
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
@@ -63,4 +65,7 @@ private:
 	float ReloadTimeInSeconds = 3;
 	
 	double LastFireTime = 0;
+
+	FVector AimDirection;
+
 };
