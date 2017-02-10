@@ -54,7 +54,6 @@ private:
 
 	bool IsBarrelMoving();
 
-	// TODO remove when Fire is moved
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 4000;
 
