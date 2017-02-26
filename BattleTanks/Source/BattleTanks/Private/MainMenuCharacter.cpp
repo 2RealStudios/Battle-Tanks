@@ -88,5 +88,15 @@ void AMainMenuCharacter::SetupPlayerInputComponent(class UInputComponent* InputC
 {
 	Super::SetupPlayerInputComponent(InputComponent);
 
+	InputComponent->BindAction("Menu Interact", IE_Pressed, this, &AMainMenuCharacter::InteractWithMenu);
+
 }
 
+void AMainMenuCharacter::InteractWithMenu()
+{
+	if (WidgetInteraction->IsOverFocusableWidget())
+	{
+		WidgetInteraction->PressPointerKey(EKeys::LeftMouseButton);
+		UE_LOG(LogTemp, Warning, TEXT("Interacting"));
+	}
+}

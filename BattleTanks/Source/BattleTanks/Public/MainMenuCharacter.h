@@ -3,10 +3,10 @@
 #pragma once
 
 #include "GameFramework/Pawn.h"
-#include "WidgetInteractionComponent.h"
 #include "MainMenuCharacter.generated.h"
 
 class UMotionControllerComponent;
+class UWidgetInteractionComponent;
 
 UCLASS()
 class BATTLETANKS_API AMainMenuCharacter : public APawn
@@ -50,4 +50,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UWidgetInteractionComponent* WidgetInteraction;
+
+	//Input functions
+	void InteractWithMenu();	
 };
