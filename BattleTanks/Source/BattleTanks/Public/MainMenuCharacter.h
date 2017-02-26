@@ -3,6 +3,7 @@
 #pragma once
 
 #include "GameFramework/Pawn.h"
+#include "WidgetInteractionComponent.h"
 #include "MainMenuCharacter.generated.h"
 
 class UMotionControllerComponent;
@@ -46,5 +47,7 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* RightHandMesh;
-	
+
+	UPROPERTY(EditAnywhere)
+	UWidgetInteractionComponent* WidgetInteraction;
 };

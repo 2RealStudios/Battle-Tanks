@@ -2,6 +2,7 @@
 
 #include "BattleTanks.h"
 #include "MotionControllerComponent.h"
+#include "WidgetInteractionComponent.h"
 #include "MainMenuCharacter.h"
 
 
@@ -59,6 +60,13 @@ AMainMenuCharacter::AMainMenuCharacter()
 	{
 		UE_LOG(LogTemp, Warning, TEXT("Cube asset not found."));
 	}
+
+	// Setup WidgetInteraction Componet for MainMenu
+	WidgetInteraction = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("MenuInteraction"));
+	WidgetInteraction->SetupAttachment(RightHandMesh);
+	WidgetInteraction->RelativeLocation = FVector(50.0f, 0, 50.0f); // Set trace to the center of the face that is away from the player
+	WidgetInteraction->bShowDebug = true;
+	
 }
 
 // Called when the game starts or when spawned
