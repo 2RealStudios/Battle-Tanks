@@ -1,6 +1,7 @@
 
 
 #include "BattleTanks.h"
+#include "MotionControllerComponent.h"
 #include "MainMenuCharacter.h"
 
 
@@ -27,6 +28,37 @@ AMainMenuCharacter::AMainMenuCharacter()
 	// Scene settings (scene is used for location(?))
 	Scene = CreateDefaultSubobject<USceneComponent>(TEXT("Scene"));
 	Scene->SetupAttachment(RootComponent);
+
+	// Controller Settings
+	LeftHandController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("Left Hand Controller"));
+	LeftHandController->Hand = EControllerHand::Left;
+	LeftHandController->SetupAttachment(RootComponent);
+
+	RightHandController = CreateDefaultSubobject<UMotionControllerComponent>(TEXT("Right Hand Controller"));
+	RightHandController->Hand = EControllerHand::Right;
+	RightHandController->SetupAttachment(RootComponent);
+
+	// Meshes for controllers
+	LeftHandMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Left Hand Mesh"));
+	RightHandMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Right Hand Mesh"));
+
+	LeftHandMesh->SetupAttachment(LeftHandController);
+	RightHandMesh->SetupAttachment(RightHandController);
+
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeVisualAsset(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'")); // Finds cube static mesh and sets it to CubeVisualAsset
+
+	if (CubeVisualAsset.Succeeded())
+	{
+		LeftHandMesh->SetStaticMesh(CubeVisualAsset.Object);
+		LeftHandMesh->SetWorldScale3D(FVector(0.2f, 0.2f, 0.2f));
+
+		RightHandMesh->SetStaticMesh(CubeVisualAsset.Object);
+		RightHandMesh->SetWorldScale3D(FVector(0.2f, 0.2f, 0.2f));
+	}
+	else
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Cube asset not found."));
+	}
 }
 
 // Called when the game starts or when spawned

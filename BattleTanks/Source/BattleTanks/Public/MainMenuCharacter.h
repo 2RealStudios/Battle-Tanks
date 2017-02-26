@@ -5,6 +5,8 @@
 #include "GameFramework/Pawn.h"
 #include "MainMenuCharacter.generated.h"
 
+class UMotionControllerComponent;
+
 UCLASS()
 class BATTLETANKS_API AMainMenuCharacter : public APawn
 {
@@ -32,6 +34,12 @@ private:
 
 	UPROPERTY(EditAnywhere)
 	USceneComponent* Scene;
+
+	UPROPERTY(EditAnywhere)
+	UMotionControllerComponent* LeftHandController;
+
+	UPROPERTY(EditAnywhere)
+	UMotionControllerComponent* RightHandController;
 
 	UPROPERTY(EditAnywhere)
 	UStaticMeshComponent* LeftHandMesh;
