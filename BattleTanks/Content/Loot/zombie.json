@@ -1,0 +1,14 @@
+[
+    {
+        "name": "fuel",
+        "weight": 2
+    },
+    {
+        "name": "ammo",
+        "weight": 2
+    },
+    {
+        "name": "none",
+        "weight": 10
+    }
+]
