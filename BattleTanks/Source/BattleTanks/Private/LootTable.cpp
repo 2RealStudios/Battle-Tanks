@@ -3,10 +3,6 @@
 #include "BattleTanks.h"
 #include "LootTable.h"
 
-ULootTable::ULootTable()
-{}
-
-
 ULootTableEntry* ULootTable::GetLoot()
 {
 	int32 randomNumber = FMath::RandRange(0 , TotalWeight);
@@ -57,6 +53,7 @@ bool ULootTable::loadFromFile(FString fileLocation)
 					TotalWeight += weight;
 				}
 			}
+			return table.Num() > 0;
 		}
 	}
 

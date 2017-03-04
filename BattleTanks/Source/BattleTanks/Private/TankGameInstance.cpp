@@ -1,24 +1,40 @@
 
 
 #include "BattleTanks.h"
+#include "LootManager.h"
+#include "ActionManager.h"
 #include "TankGameInstance.h"
-#include "LootTable.h"
 
+UTankGameInstance::UTankGameInstance()
+{
+	UE_LOG(LogTemp, Warning, TEXT("Custom Game Instance Created"))
+}
 
 void  UTankGameInstance::Init()
 {
 	Super::Init();
 	UE_LOG(LogTemp, Warning, TEXT("Custom Game Instance::Init()"))
-	IFileManager& FileManager = IFileManager::Get();
-	TArray<FString> files;
 
-	FString gameDir = FPaths::GameContentDir() +"/Loot/";
-	FString ext = FString("*.json");
-	FileManager.FindFiles(files, *gameDir,*ext);
-	for (auto& Str : files) 
+	ActionManager = NewObject<UActionManager>();
+	ActionManager->AddActions();
+
+	LootManager = NewObject<ULootManager>();
+	LootManager->SetActionManager(ActionManager);
+
+	UAction* Loot = LootManager->GetLoot(FString("zombie1"));
+	if (Loot)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("%s"), *Str)
-		ULootTable* table = NewObject<ULootTable>();
-		table->loadFromFile(gameDir + Str);
+		UE_LOG(LogTemp,Warning, TEXT("Successfully got loot"))
 	}
+}
+
+
+ULootManager* UTankGameInstance::GetLootManager()
+{
+	return LootManager;
+}
+
+UActionManager* UTankGameInstance::GetActionManager()
+{
+	return ActionManager;
 }

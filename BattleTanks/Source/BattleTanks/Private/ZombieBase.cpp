@@ -1,6 +1,9 @@
 
 
 #include "BattleTanks.h"
+#include "TankGameInstance.h"
+#include "LootManager.h"
+#include "Action.h"
 #include "ZombieBase.h"
 
 
@@ -32,3 +35,15 @@ void AZombieBase::SetupPlayerInputComponent(UInputComponent* PlayerInputComponen
 
 }
 
+float AZombieBase::TakeDamage(float DamageAmount, struct FDamageEvent const & DamageEvent, class AController * EventInstigator, AActor * DamageCauser)
+{
+	UTankGameInstance* GameInstance = Cast<UTankGameInstance>(GetGameInstance());
+	if (GameInstance)
+	{
+		auto LootManager = GameInstance->GetLootManager();
+		auto Action = LootManager->GetLoot(FString("zombie1"));
+		Action->doAction(this);
+		Destroy();
+	}
+	return DamageAmount;
+}
