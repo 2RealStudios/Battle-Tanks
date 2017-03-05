@@ -46,26 +46,24 @@ AMainMenuCharacter::AMainMenuCharacter()
 	LeftHandMesh->SetupAttachment(LeftHandController);
 	RightHandMesh->SetupAttachment(RightHandController);
 
-	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeVisualAsset(TEXT("StaticMesh'/Game/StarterContent/Shapes/Shape_Cube.Shape_Cube'")); // Finds cube static mesh and sets it to CubeVisualAsset
+	static ConstructorHelpers::FObjectFinder<UStaticMesh> CubeVisualAsset(TEXT("StaticMesh'/Engine/VREditor/Devices/Oculus/OculusControllerMesh'")); // Finds cube static mesh and sets it to CubeVisualAsset
 
 	if (CubeVisualAsset.Succeeded())
 	{
 		LeftHandMesh->SetStaticMesh(CubeVisualAsset.Object);
-		LeftHandMesh->SetWorldScale3D(FVector(0.2f, 0.2f, 0.2f));
-
 		RightHandMesh->SetStaticMesh(CubeVisualAsset.Object);
-		RightHandMesh->SetWorldScale3D(FVector(0.2f, 0.2f, 0.2f));
 	}
 	else
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Cube asset not found."));
+		UE_LOG(LogTemp, Warning, TEXT("Asset not found."));
 	}
 
 	// Setup WidgetInteraction Componet for MainMenu
 	WidgetInteraction = CreateDefaultSubobject<UWidgetInteractionComponent>(TEXT("MenuInteraction"));
 	WidgetInteraction->SetupAttachment(RightHandMesh);
-	WidgetInteraction->RelativeLocation = FVector(50.0f, 0, 50.0f); // Set trace to the center of the face that is away from the player
+	WidgetInteraction->RelativeLocation = FVector(4.0f, 0.0f, 0.0f); // Set trace to the center of the face that is away from the player
 	WidgetInteraction->bShowDebug = true;
+	WidgetInteraction->InteractionDistance = 5000.0f;
 	
 }
 
