@@ -51,6 +51,9 @@ private:
 	UPROPERTY(EditAnywhere)
 	UWidgetInteractionComponent* WidgetInteraction;
 
+	UPROPERTY(EditAnywhere)
+	USoundWave* MainMenuSelectSound;
+
 	//Input functions
 	void InteractWithMenu();	
 };
