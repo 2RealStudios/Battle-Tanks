@@ -43,6 +43,8 @@ AMainMenuCharacter::AMainMenuCharacter()
 	LeftHandMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Left Hand Mesh"));
 	RightHandMesh = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Right Hand Mesh"));
 
+	RightHandMesh->RelativeScale3D = FVector(1.0f, -1.0f, 1.0f); // Mirrors mesh about Y-Axis to create a right handed controller since we are only given a left handed controller.
+
 	LeftHandMesh->SetupAttachment(LeftHandController);
 	RightHandMesh->SetupAttachment(RightHandController);
 
@@ -94,7 +96,7 @@ void AMainMenuCharacter::InteractWithMenu()
 {
 	if (WidgetInteraction->IsOverFocusableWidget())
 	{
-		WidgetInteraction->PressPointerKey(EKeys::LeftMouseButton);
-		UE_LOG(LogTemp, Warning, TEXT("Interacting"));
+		WidgetInteraction->PressPointerKey(EKeys::LeftMouseButton); // Simulates a mouse click on the menu
 	}
+
 }
