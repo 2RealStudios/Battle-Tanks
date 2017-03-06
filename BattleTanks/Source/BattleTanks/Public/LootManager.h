@@ -27,6 +27,10 @@ private:
 	TMap<FString, ULootTable*> Tables;
 	UAction* EMPTY;
 	UActionManager* ActionManager;
+
+	// SpawnLootActor Method?
+	// Replace UActions for Items with this method?
+	// Return Empty on GetLoot if Item is rolled?
 };
 
 
