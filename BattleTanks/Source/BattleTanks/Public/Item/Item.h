@@ -26,9 +26,23 @@ public:
 		return Cast<ObjClass>(StaticLoadObject(ObjClass::StaticClass(), NULL, *Path.ToString()));
 	}
 
+	static FORCEINLINE FName Format(FString Format, FString ToAddToFormat)
+	{
+		FFormatOrderedArguments Args;
+		Args.Add(FFormatArgumentValue(FText::FromString(ToAddToFormat)));
+		
+		auto FormattedText = FText::Format(FText::FromString(FString(Format)), Args);
+		auto FormattedString = FormattedText.ToString();
+
+		return FName(*FormattedString);
+	}
+
 	virtual void OnLootActorSet(ALootActor* LootActor);
 	//virtual void OnCollide(AActor* Actor)?
 
-	
+protected:
+	UStaticMesh* GetStaticMesh(FName Path);
+	UMaterial* GetMaterial(FName Path);
+
 };
 
