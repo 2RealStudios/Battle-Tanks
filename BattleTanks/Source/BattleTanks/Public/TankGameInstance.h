@@ -7,7 +7,7 @@
 
 class ULootManager;
 class UActionManager;
-
+class UItemManager;
 /**
  * 
  */
@@ -21,9 +21,12 @@ public:
 
 	ULootManager* GetLootManager();
 	UActionManager* GetActionManager();
+	UItemManager* GetItemManager();
 
 private:
 	virtual void  Init() override;
 	ULootManager* LootManager;
 	UActionManager* ActionManager;
+	UItemManager* ItemManager;
+
 };

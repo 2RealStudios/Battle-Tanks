@@ -15,7 +15,8 @@ UCLASS()
 class BATTLETANKS_API UItem : public UObject
 {
 	GENERATED_BODY()
-	
+
+public:
 	template <typename ObjClass>
 	static FORCEINLINE ObjClass* LoadObjFromPath(const FName& Path)
 	{
@@ -25,10 +26,8 @@ class BATTLETANKS_API UItem : public UObject
 		return Cast<ObjClass>(StaticLoadObject(ObjClass::StaticClass(), NULL, *Path.ToString()));
 	}
 
-
-public:
 	virtual void OnLootActorSet(ALootActor* LootActor);
-	
+	//virtual void OnCollide(AActor* Actor)?
 
 	
 };

@@ -9,9 +9,14 @@
 
 void USpawnAction::doAction(AActor* ActorCalling)
 {
+	if (!ItemToSpawn)
+	{
+		return;
+	}
+
 	UWorld* World = ActorCalling->GetWorld();
 	auto LootActor = World->SpawnActor<ALootActor>(ALootActor::StaticClass(), ActorCalling->GetActorLocation(), ActorCalling->GetActorRotation());
-	LootActor->SetItem(NewObject<UItem>());
+	LootActor->SetItem(ItemToSpawn);
 	//TODO MAKE UITEM
 	// Ammo 1 : 5 : 10 : 20
 }

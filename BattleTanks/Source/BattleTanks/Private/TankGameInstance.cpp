@@ -1,6 +1,7 @@
 
 
 #include "BattleTanks.h"
+#include "Item/ItemManager.h"
 #include "LootManager.h"
 #include "ActionManager.h"
 #include "TankGameInstance.h"
@@ -15,8 +16,10 @@ void  UTankGameInstance::Init()
 	Super::Init();
 	UE_LOG(LogTemp, Warning, TEXT("Custom Game Instance::Init()"))
 
+	ItemManager = NewObject<UItemManager>();
+
 	ActionManager = NewObject<UActionManager>();
-	ActionManager->AddActions();
+	ActionManager->AddActions(ItemManager);
 
 	LootManager = NewObject<ULootManager>();
 	LootManager->SetActionManager(ActionManager);
@@ -37,4 +40,9 @@ ULootManager* UTankGameInstance::GetLootManager()
 UActionManager* UTankGameInstance::GetActionManager()
 {
 	return ActionManager;
+}
+
+UItemManager* UTankGameInstance::GetItemManager()
+{
+	return ItemManager;
 }

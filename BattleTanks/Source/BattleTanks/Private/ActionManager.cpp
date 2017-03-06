@@ -3,21 +3,27 @@
 #include "BattleTanks.h"
 #include "Action.h"
 #include "Actions/SpawnAction.h"
+#include "Item/ItemManager.h"
+#include "Item/Item.h"
 #include "ActionManager.h"
 
-bool UActionManager::AddActions()
+bool UActionManager::AddActions(UItemManager* ItemManagerToSet)
 {
 	UE_LOG(LogTemp, Warning, TEXT("Adding Actions"))
+
+	ItemManager = ItemManagerToSet;
 
 	try
 	{
 		AddEmpty();
 
-		auto SpawnActor = NewObject<USpawnAction>();
-		Actions.Add(FString("fuel"), SpawnActor);
-		Actions.Add(FString("ammo"), SpawnActor);
+		int amounts[] = { 1, 5, 10, 20 };
 
-
+		for (int amount : amounts)
+		{
+			FString ActionName = FString("fuel") + FString::FromInt(amount);
+			AddSpawnAction(ActionName, ItemManager->GetItem(ActionName));
+		}
 	}
 	catch (const std::exception&)
 	{
@@ -48,4 +54,16 @@ void UActionManager::AddEmpty()
 {
 	EMPTY = NewObject<UAction>();
 	Actions.Add(FString("empty"), EMPTY);
+}
+
+void UActionManager::AddSpawnAction(FString ActionName, UItem* Item)
+{
+	if (Item == ItemManager->GetNullItem())
+	{
+		UE_LOG(LogTemp, Warning, TEXT("Unable to add a spawn action for: %s"), *ActionName)
+		return;
+	}
+	auto SpawnActor = NewObject<USpawnAction>();
+	SpawnActor->ItemToSpawn = Item;
+	this->Actions.Add(ActionName, SpawnActor);
 }
