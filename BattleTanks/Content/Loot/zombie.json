@@ -1,14 +1,14 @@
 [
     {
-        "name": "fuel",
-        "weight": 2
+        "name": "loot:fuel",
+        "weight": 1
     },
     {
         "name": "ammo",
-        "weight": 2
+        "weight": 1
     },
     {
         "name": "empty",
-        "weight": 10
+        "weight": 1
     }
 ]
