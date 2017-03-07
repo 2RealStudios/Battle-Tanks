@@ -2,9 +2,9 @@
 
 #include "BattleTanks.h"
 #include "LootActor.h"
-#include "ItemFuel.h"
+#include "ItemAmmo.h"
 
-void UItemFuel::OnLootActorSet(ALootActor* LootActor)
+void UItemAmmo::OnLootActorSet(ALootActor* LootActor)
 {
 	UStaticMeshComponent* Mesh = NewObject<UStaticMeshComponent>(LootActor);
 	if (Mesh)
@@ -13,12 +13,12 @@ void UItemFuel::OnLootActorSet(ALootActor* LootActor)
 		Mesh->AttachToComponent(LootActor->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
 	}
 
-	auto ItemMesh = GetStaticMesh(TEXT("/Engine/BasicShapes/Cube.Cube")); // Finds cube static mesh
+	auto ItemMesh = GetStaticMesh(TEXT("/Engine/BasicShapes/Sphere.Sphere")); // Finds cube static mesh
 
 	auto MaterialPath = Format(FString("/Game/Item/M_Item{0}.M_Item{0}"), FString::FromInt(Amount));
 
 	auto Material = GetMaterial(MaterialPath); // Finds item material
-	
+
 	if (ItemMesh)
 	{
 		Mesh->SetStaticMesh(ItemMesh);
@@ -33,6 +33,5 @@ void UItemFuel::OnLootActorSet(ALootActor* LootActor)
 		//UE_LOG(LogTemp, Warning, TEXT("Unable to find cube?"));
 	}
 }
-
 
 

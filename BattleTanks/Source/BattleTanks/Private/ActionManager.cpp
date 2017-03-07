@@ -21,8 +21,11 @@ bool UActionManager::AddActions(UItemManager* ItemManagerToSet)
 
 		for (int amount : amounts)
 		{
-			FString ActionName = FString("fuel") + FString::FromInt(amount);
-			AddSpawnAction(ActionName, ItemManager->GetItem(ActionName));
+			FString FuelName = FString("fuel") + FString::FromInt(amount);
+			AddSpawnAction(FuelName, ItemManager->GetItem(FuelName));
+
+			FString AmmoName = FString("ammo") + FString::FromInt(amount);
+			AddSpawnAction(AmmoName, ItemManager->GetItem(AmmoName));
 		}
 	}
 	catch (const std::exception&)

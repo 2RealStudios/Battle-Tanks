@@ -3,6 +3,7 @@
 #include "BattleTanks.h"
 #include "Item/Item.h"
 #include "Item/ItemFuel.h"
+#include "Item/ItemAmmo.h"
 #include "ItemManager.h"
 
 UItemManager::UItemManager()
@@ -41,6 +42,10 @@ TMap<FString, UItem*> UItemManager::AddItems()
 		auto Fuel = NewObject<UItemFuel>();
 		Fuel->Amount = amount;
 		Items.Add(FString("fuel") + FString::FromInt(amount), Fuel);
+		
+		auto Ammo = NewObject<UItemAmmo>();
+		Ammo->Amount = amount;
+		Items.Add(FString("ammo") + FString::FromInt(amount), Ammo);
 	}
 	return Items;
 
