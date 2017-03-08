@@ -36,4 +36,10 @@ private:
 	void DriveTrack();
 
 	float CurrentThrottle = 0;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MaxThrottle = 0.5;
+
+	UPROPERTY(EditDefaultsOnly)
+	float MinThrottle = -0.5;
 };
