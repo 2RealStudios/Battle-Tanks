@@ -67,7 +67,7 @@ UAction* ULootManager::GetLoot(FString TableName)
 		}
 		else
 		{
-			return ActionManager->GetAction(loot); //TODO MAKE RETURN RIGHT ACTION
+			return ActionManager->GetAction(loot);
 		}
 	}
 
