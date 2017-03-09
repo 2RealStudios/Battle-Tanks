@@ -17,10 +17,15 @@
             "path":"$ItemMesh",
             "materials": [
                 {
-                    "path":"$ItemColor",
-                    "index":0
+                    "path": "$ItemColor",
+                    "index": 0
                 }
-            ]
+            ],
+            "scale": [ 1, 1, 1 ],
+            "rotation": [ 0, 0, 0 ],
+            "location": [ 1, 1, 1 ],
+            "parentComponent": "",
+            "parentSocket": ""
         }
     ]
 }			

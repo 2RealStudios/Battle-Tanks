@@ -128,7 +128,7 @@ void UJsonModel::LoadFromFile(FString FileName)
 
 }
 
-void UJsonModel::PreLoad()
+void UJsonModel::PreLoad(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad) 
 {
 	TSet<FString> LoadedObjects;
 	TArray<FString> ObjectsToPreLoad;
@@ -136,23 +136,13 @@ void UJsonModel::PreLoad()
 	Meshes.GenerateValueArray(ObjectsToPreLoad);
 	for (auto Mesh : ObjectsToPreLoad)
 	{
-		if (!LoadedObjects.Contains(Mesh))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Mesh)
-			GetStaticMesh(FName(*Mesh)); 
-			LoadedObjects.Add(Mesh);
-		}
+		MeshesToLoad.Add(Mesh);
 	}
 
 	Materials.GenerateValueArray(ObjectsToPreLoad);
 	for (auto Material : ObjectsToPreLoad)
 	{
-		if (!LoadedObjects.Contains(Material))
-		{
-			UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Material)
-			GetMaterial(FName(*Material));
-			LoadedObjects.Add(Material);
-		}
+		MaterialToLoad.Add(Material);
 	}
 
 
@@ -166,12 +156,7 @@ void UJsonModel::PreLoad()
 
 		if (!Mesh.StartsWith(FString("$"))) 
 		{
-			if (!LoadedObjects.Contains(Mesh))
-			{
-				UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Mesh)
-				GetStaticMesh(FName(*Mesh));
-				LoadedObjects.Add(Mesh);
-			}
+			MeshesToLoad.Add(Mesh);
 		}
 
 		Component->Materials.GenerateValueArray(ObjectsToPreLoad);
@@ -179,12 +164,7 @@ void UJsonModel::PreLoad()
 		{
 			if (!Material.StartsWith(FString("$"))) 
 			{
-				if (!LoadedObjects.Contains(Material))
-				{
-					UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Material)
-					GetMaterial(FName(*Material));
-					LoadedObjects.Add(Material);
-				}
+				MaterialToLoad.Add(Material);
 			}
 		}
 	}

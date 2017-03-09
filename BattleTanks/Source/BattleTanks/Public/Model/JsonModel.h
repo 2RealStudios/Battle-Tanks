@@ -19,7 +19,7 @@ class BATTLETANKS_API UJsonModel : public UObject
 
 public:
 	void LoadFromFile(FString FileName);
-	void PreLoad();
+	void PreLoad(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad);
 	void AttachToLootActor(ALootActor* Actor);
 
 private:

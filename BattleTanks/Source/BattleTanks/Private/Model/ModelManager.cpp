@@ -43,9 +43,25 @@ UJsonModel* UModelManager::GetModel(FString ModelName)
 void  UModelManager::PreLoadModelAssets()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Preloading Models"))
+	
+	TSet<FString> MeshesToLoad;
+	TSet<FString> MaterialToLoad;
+	
 	for (auto& Entry : Models)
 	{
-		Entry.Value->PreLoad();
+		Entry.Value->PreLoad(MeshesToLoad, MaterialToLoad);
+	}
+
+	for (auto Mesh : MeshesToLoad)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Mesh)
+		UJsonModel::GetStaticMesh(FName(*Mesh));
+	}
+
+	for (auto Material : MaterialToLoad)
+	{
+		UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Material)
+		UJsonModel::GetMaterial(FName(*Material));
 	}
 }
 
