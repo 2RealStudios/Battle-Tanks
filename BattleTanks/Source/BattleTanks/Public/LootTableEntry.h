@@ -14,13 +14,15 @@ class BATTLETANKS_API ULootTableEntry : public UObject
 	GENERATED_BODY()
 
 public:
+	// Default Constuctor
 	ULootTableEntry();
-	~ULootTableEntry();
 
 	UPROPERTY()
+	// The action/loot table the is associated with this entry
 	FString name;
 
 	UPROPERTY()
+	// The weight of this entry. How often it gets picked
 	int32 weight;
 	
 	

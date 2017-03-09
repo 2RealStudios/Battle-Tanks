@@ -6,6 +6,3 @@
 
 ULootTableEntry::ULootTableEntry()
 {}
-
-ULootTableEntry::~ULootTableEntry()
-{}

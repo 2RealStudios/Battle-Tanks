@@ -128,7 +128,7 @@ void UJsonModel::LoadFromFile(FString FileName)
 
 }
 
-void UJsonModel::PreLoad(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad) 
+void UJsonModel::PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad)
 {
 	TSet<FString> LoadedObjects;
 	TArray<FString> ObjectsToPreLoad;

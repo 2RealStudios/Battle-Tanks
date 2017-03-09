@@ -27,7 +27,7 @@ void  UTankGameInstance::Init()
 	LootManager->SetActionManager(ActionManager);
 
 	ModelManager = NewObject<UModelManager>();
-	ModelManager->PreLoadModelAssets();
+	ModelManager->PreloadModelAssets();
 }
 
 UModelManager* UTankGameInstance::GetModelManager()

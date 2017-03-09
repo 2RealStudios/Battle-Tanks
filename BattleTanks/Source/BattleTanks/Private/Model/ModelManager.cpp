@@ -40,16 +40,16 @@ UJsonModel* UModelManager::GetModel(FString ModelName)
 	return EMPTY;
 }
 
-void  UModelManager::PreLoadModelAssets()
+void  UModelManager::PreloadModelAssets()
 {
-	UE_LOG(LogTemp, Warning, TEXT("Preloading Models"))
+	UE_LOG(LogTemp, Warning, TEXT("Preloading Models Assets"))
 	
 	TSet<FString> MeshesToLoad;
 	TSet<FString> MaterialToLoad;
 	
 	for (auto& Entry : Models)
 	{
-		Entry.Value->PreLoad(MeshesToLoad, MaterialToLoad);
+		Entry.Value->PreloadAssets(MeshesToLoad, MaterialToLoad);
 	}
 
 	for (auto Mesh : MeshesToLoad)

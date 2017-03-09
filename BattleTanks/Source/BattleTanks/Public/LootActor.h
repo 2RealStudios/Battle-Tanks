@@ -6,7 +6,9 @@
 #include "LootActor.generated.h"
 
 class UItem;
-
+/*
+ *	The Actor that represents any item in game
+ */
 UCLASS()
 class BATTLETANKS_API ALootActor : public AActor
 {
@@ -18,8 +20,10 @@ public:
 
 	//UStaticMeshComponent* Mesh;
 
-	// ??? GetItem();
+	// Used to set item and attach model
 	void SetItem(UItem* ItemToSet);
+
+	// Used to make the actor rotate in place
 	URotatingMovementComponent* RotatingComponent;
 
 protected:
@@ -27,7 +31,11 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+
+	// The item this actor is representing
 	UItem* Item;
+
+	// How long has this actor been alive, used to make actor oscillate 
 	float RunningTime;
 public:	
 	// Called every frame
