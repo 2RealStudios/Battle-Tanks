@@ -2,6 +2,10 @@
 
 #include "BattleTanks.h"
 #include "Item/Item.h"
+#include "TankGameInstance.h"
+#include "Item/ItemManager.h"
+#include "Model/ModelManager.h"
+#include "Model/JsonModel.h"
 #include "LootActor.h"
 
 
@@ -20,8 +24,17 @@ ALootActor::ALootActor()
 
 void ALootActor::SetItem(UItem* ItemToSet)
 {
-	ALootActor* LootActor = this;
-	ItemToSet->OnLootActorSet(LootActor);
+	Item = ItemToSet;
+	UTankGameInstance* GameInstance = Cast<UTankGameInstance>(GetWorld()->GetGameInstance());
+	if (GameInstance)
+	{
+		UModelManager* ModelManager = GameInstance->GetModelManager();
+		UItemManager* ItemManager = GameInstance->GetItemManager();
+
+		FString ItemName = ItemManager->GetItemName(Item);
+		UJsonModel* Model = ModelManager->GetModel(ItemName);
+		Model->AttachToLootActor(this);
+	}
 
 }
 

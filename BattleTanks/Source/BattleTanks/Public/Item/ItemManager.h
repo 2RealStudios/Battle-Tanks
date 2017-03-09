@@ -18,6 +18,7 @@ public:
 	UItemManager();
 	UItem* GetItem(FString ItemName);
 	UItem* GetNullItem();
+	FString GetItemName(UItem* Item);
 
 private:
 	TMap<FString, UItem*> Items;

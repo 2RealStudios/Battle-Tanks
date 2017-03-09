@@ -20,7 +20,6 @@ UItem* UItemManager::GetItem(FString ItemName)
 	{
 		return Items[ItemName];
 	}
-
 	return GetNullItem();
 }
 
@@ -29,11 +28,21 @@ UItem* UItemManager::GetNullItem()
 	return NULL_ITEM;
 }
 
+FString UItemManager::GetItemName(UItem* Item)
+{
+	const FString* ret = Items.FindKey(Item);
+	if (ret)
+	{
+		return *ret;
+	}
+	return FString("empty");
+}
+
 TMap<FString, UItem*> UItemManager::AddItems()
 {
 	TMap<FString, UItem*> Items;
 	NULL_ITEM = NewObject<UItem>();
-	Items.Add(FString("null"), NULL_ITEM);
+	Items.Add(FString("empty"), NULL_ITEM);
 
 	int amounts[] = {1, 5, 10, 20};
 

@@ -4,7 +4,9 @@
 #include "Item/ItemManager.h"
 #include "LootManager.h"
 #include "ActionManager.h"
+#include "Model/ModelManager.h"
 #include "TankGameInstance.h"
+
 
 UTankGameInstance::UTankGameInstance()
 {
@@ -24,13 +26,14 @@ void  UTankGameInstance::Init()
 	LootManager = NewObject<ULootManager>();
 	LootManager->SetActionManager(ActionManager);
 
-	UAction* Loot = LootManager->GetLoot(FString("zombie1"));
-	if (Loot)
-	{
-		UE_LOG(LogTemp,Warning, TEXT("Successfully got loot"))
-	}
+	ModelManager = NewObject<UModelManager>();
+	ModelManager->PreLoadModelAssets();
 }
 
+UModelManager* UTankGameInstance::GetModelManager()
+{
+	return ModelManager;
+}
 
 ULootManager* UTankGameInstance::GetLootManager()
 {

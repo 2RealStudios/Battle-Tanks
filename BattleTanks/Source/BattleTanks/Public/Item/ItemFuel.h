@@ -14,11 +14,5 @@ class BATTLETANKS_API UItemFuel : public UItem
 	GENERATED_BODY()
 
 public:
-
-
 	int32 Amount = 1;
-
-	virtual void OnLootActorSet(ALootActor* LootActor) override;
-
-	
 };

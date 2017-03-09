@@ -12,27 +12,20 @@ bool UActionManager::AddActions(UItemManager* ItemManagerToSet)
 	UE_LOG(LogTemp, Warning, TEXT("Adding Actions"))
 
 	ItemManager = ItemManagerToSet;
+	
+	AddEmpty();
 
-	try
+	int amounts[] = { 1, 5, 10, 20 };
+
+	for (int amount : amounts)
 	{
-		AddEmpty();
+		FString FuelName = FString("fuel") + FString::FromInt(amount);
+		AddSpawnAction(FuelName, ItemManager->GetItem(FuelName));
 
-		int amounts[] = { 1, 5, 10, 20 };
-
-		for (int amount : amounts)
-		{
-			FString FuelName = FString("fuel") + FString::FromInt(amount);
-			AddSpawnAction(FuelName, ItemManager->GetItem(FuelName));
-
-			FString AmmoName = FString("ammo") + FString::FromInt(amount);
-			AddSpawnAction(AmmoName, ItemManager->GetItem(AmmoName));
-		}
+		FString AmmoName = FString("ammo") + FString::FromInt(amount);
+		AddSpawnAction(AmmoName, ItemManager->GetItem(AmmoName));
 	}
-	catch (const std::exception&)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Didn't work"))
-		return false;
-	}
+	
 	return true;
 }
 
