@@ -1,7 +1,6 @@
 
 
 #include "BattleTanks.h"
-#include "LootActor.h"
 #include "TankGameInstance.h"
 #include "Model/ModelManager.h"
 #include "JsonModel.h"
@@ -64,16 +63,29 @@ void UJsonModel::LoadFromFile(FString FileName)
 				{
 					TSharedPtr<FJsonObject> ComponentObject = MeshValue->AsObject();
 					UJsonComponent* Component = NewObject<UJsonComponent>();
-					Component->Name = ComponentObject->GetStringField(FString("name"));
-					Component->Path = ComponentObject->GetStringField(FString("path"));
 
-					for (auto MaterialValue : ComponentObject->GetArrayField(FString("materials")))
+					if (ComponentObject->HasField(FString("parent")))
 					{
-						auto MaterialObject = MaterialValue->AsObject();
-						auto MaterialIndex = MaterialObject->GetIntegerField(FString("index"));
-						auto MaterialPath = MaterialObject->GetStringField(FString("path"));
+						Component->Parent = ComponentObject->GetStringField(FString("parent"));
+					}
 
-						Component->Materials.Add(MaterialIndex, MaterialPath);
+					Component->Name = ComponentObject->GetStringField(FString("name"));
+
+					if (ComponentObject->HasField(FString("path")))
+					{
+						Component->Path = ComponentObject->GetStringField(FString("path"));
+					}
+
+					if (ComponentObject->HasField(FString("materials")))
+					{
+						for (auto MaterialValue : ComponentObject->GetArrayField(FString("materials")))
+						{
+							auto MaterialObject = MaterialValue->AsObject();
+							auto MaterialIndex = MaterialObject->GetIntegerField(FString("index"));
+							auto MaterialPath = MaterialObject->GetStringField(FString("path"));
+
+							Component->Materials.Add(MaterialIndex, MaterialPath);
+						}
 					}
 
 					if (ComponentObject->HasField(FString("scale")))
@@ -90,7 +102,7 @@ void UJsonModel::LoadFromFile(FString FileName)
 					if (ComponentObject->HasField(FString("rotation")))
 					{
 						FRotator RotationToSet = FRotator(0);
-						auto ScaleValues = ComponentObject->GetArrayField(FString("scale"));
+						auto ScaleValues = ComponentObject->GetArrayField(FString("rotation"));
 						RotationToSet.Pitch = ScaleValues[0]->AsNumber();
 						RotationToSet.Yaw = ScaleValues[1]->AsNumber();
 						RotationToSet.Roll = ScaleValues[2]->AsNumber();
@@ -154,7 +166,7 @@ void UJsonModel::PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &Mater
 	{
 		FString Mesh = Component->Path;
 
-		if (!Mesh.StartsWith(FString("$"))) 
+		if (!Mesh.StartsWith(FString("$")) && !Mesh.IsEmpty())
 		{
 			MeshesToLoad.Add(Mesh);
 		}
@@ -171,13 +183,21 @@ void UJsonModel::PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &Mater
 }
 
 
-void UJsonModel::AttachToLootActor(ALootActor* Actor)
+TMap<FString, USceneComponent*> UJsonModel::AttachToActor(AActor* Actor)
 {
+	TMap<FString, USceneComponent*> AllComponents;
+
+	for(auto Component : Actor->GetComponents())
+	{
+		USceneComponent* SceneComponent = Cast<USceneComponent>(Component);
+		if(SceneComponent)
+			AllComponents.Add(SceneComponent->GetName(), SceneComponent);
+	}
+
 	TMap<FString, USceneComponent*> AddedComponents;
 	TArray<UJsonComponent*> ComponentsToAdd;
 
 	UJsonModel* CompositeModel = BuildCompositeModel(Cast<UTankGameInstance>(Actor->GetWorld()->GetGameInstance()));
-
 
 	CompositeModel->Components.GenerateValueArray(ComponentsToAdd);
 	while (ComponentsToAdd.Num() > 0)
@@ -186,12 +206,13 @@ void UJsonModel::AttachToLootActor(ALootActor* Actor)
 		for (auto It = ComponentsToAdd.CreateIterator(); It; ++It)
 		{
 			auto JsonComponent = *It;
-			if (JsonComponent->ParentComponent.IsEmpty() || AddedComponents.Contains(JsonComponent->ParentComponent))
+			JsonComponent = BuildCompsiteComponent(CompositeModel, JsonComponent);
+			if (JsonComponent->ParentComponent.IsEmpty() || AllComponents.Contains(JsonComponent->ParentComponent))
 			{
 				USceneComponent* ComponentToAttachTo = Actor->GetRootComponent();
 				if (!JsonComponent->ParentComponent.IsEmpty())
 				{
-					ComponentToAttachTo = AddedComponents[JsonComponent->ParentComponent];
+					ComponentToAttachTo = AllComponents[JsonComponent->ParentComponent];
 				}
 
 				FName SocketToAttachTo = NAME_None;
@@ -262,6 +283,7 @@ void UJsonModel::AttachToLootActor(ALootActor* Actor)
 					//UE_LOG(LogTemp, Warning, TEXT("Unable to find cube?"));
 				}
 
+				AllComponents.Add(JsonComponent->Name, Mesh);
 				AddedComponents.Add(JsonComponent->Name, Mesh);
 				ToRemove.Add(It.GetIndex());
 			}
@@ -275,6 +297,7 @@ void UJsonModel::AttachToLootActor(ALootActor* Actor)
 			}
 		}
 	}
+	return AddedComponents;
 }
 
 
@@ -298,6 +321,44 @@ UJsonModel* UJsonModel::BuildCompositeModel(UTankGameInstance* GameInstance)
 	}
 
 	return NewObject<UJsonModel>(); // Should NEVER Reach
+}
+
+UJsonComponent* UJsonModel::BuildCompsiteComponent(UJsonModel* Model, UJsonComponent* JsonComponent)
+{
+	if (JsonComponent->Parent.IsEmpty())
+		return JsonComponent->Clone();
+
+	UJsonComponent* ParentComponent = Model->Components[JsonComponent->Parent];
+
+	UJsonComponent* CompsiteComponent = BuildCompsiteComponent(Model, ParentComponent);
+
+	CompsiteComponent->Parent = JsonComponent->Parent;
+	CompsiteComponent->Name = JsonComponent->Name;
+
+	if(!JsonComponent->Path.IsEmpty())
+		CompsiteComponent->Path = JsonComponent->Path;
+
+	CompsiteComponent->Materials.Append(JsonComponent->Materials);
+
+	if(CompsiteComponent->Scale != JsonComponent->Scale)
+		CompsiteComponent->Scale = JsonComponent->Scale;
+
+	if (CompsiteComponent->Rotation != JsonComponent->Rotation)
+		CompsiteComponent->Rotation = JsonComponent->Rotation;
+	
+	if (CompsiteComponent->Location != JsonComponent->Location)
+		CompsiteComponent->Location = JsonComponent->Location;
+
+	if (!JsonComponent->ParentComponent.IsEmpty())
+	{
+		CompsiteComponent->ParentComponent = JsonComponent->ParentComponent;
+		CompsiteComponent->ParentSocket = FString();
+
+		if (!JsonComponent->ParentSocket.IsEmpty())
+			CompsiteComponent->ParentSocket = JsonComponent->ParentSocket;
+	}
+	return CompsiteComponent;
+
 }
 
 UJsonModel* UJsonModel::Clone()

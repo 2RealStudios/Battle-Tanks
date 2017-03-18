@@ -6,7 +6,6 @@
 #include "Model/JsonComponent.h"
 #include "JsonModel.generated.h"
 
-class ALootActor;
 class UTankGameInstance;
 
 /**
@@ -25,7 +24,7 @@ public:
 	void PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad);
 
 	// Attach this model to the LootActor provided
-	void AttachToLootActor(ALootActor* Actor);
+	TMap<FString, USceneComponent*> AttachToActor(AActor* Actor);
 
 private:
 
@@ -43,6 +42,9 @@ private:
 
 	// Builds a Model based on the parent model of this model
 	UJsonModel* BuildCompositeModel(UTankGameInstance* GameInstance);
+
+	//
+	UJsonComponent* BuildCompsiteComponent(UJsonModel* Model, UJsonComponent* JsonComponent);
 
 	// Clones this model and return a new instance
 	UJsonModel* Clone();

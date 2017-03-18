@@ -14,6 +14,9 @@ class BATTLETANKS_API UJsonComponent : public UObject
 	GENERATED_BODY()
 	
 public:
+
+	FString Parent = FString();
+
 	// The name of the StaticMeshComponent that this will create
 	FString Name = FString();
 
@@ -38,6 +41,6 @@ public:
 	// The socket this component will attach to, defaults to not attaching to a socket
 	FString ParentSocket = FString();
 
-	
+	UJsonComponent* Clone();
 	
 };

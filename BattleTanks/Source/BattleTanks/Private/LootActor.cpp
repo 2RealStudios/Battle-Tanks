@@ -33,7 +33,7 @@ void ALootActor::SetItem(UItem* ItemToSet)
 
 		FString ItemName = ItemManager->GetItemName(Item);
 		UJsonModel* Model = ModelManager->GetModel(ItemName);
-		Model->AttachToLootActor(this);
+		Model->AttachToActor(this);
 	}
 
 }
