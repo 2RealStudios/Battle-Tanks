@@ -17,6 +17,9 @@ class BATTLETANKS_API UJsonModel : public UObject
 	GENERATED_BODY()
 
 public:
+	// This models name
+	FString Name = FString();
+
 	// Load this model from the file provided
 	void LoadFromFile(FString FileName);
 
