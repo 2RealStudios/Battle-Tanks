@@ -43,6 +43,12 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	int32 GetRoundsLeft() const;
 
+	UFUNCTION(BlueprintCallable, Category = "Trajectory")
+	FVector GetStartLocation() const;
+
+	UFUNCTION(BlueprintCallable, Category = "Trajectory")
+	FVector GetInitialVelocity() const;
+
 protected:
 	UPROPERTY(BlueprintReadOnly, Category = "State")
 	EFiringState FiringState = EFiringState::Reloading;
@@ -65,6 +71,12 @@ private:
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float LaunchSpeed = 8000;
+
+	UPROPERTY(EditDefaultsOnly, Category = "Trajectory")
+	FVector StartLocation = FVector(0);
+
+	UPROPERTY(EditDefaultsOnly, Category = "Trajectory")
+	FVector InitialVelocity = FVector(0);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
 	float ReloadTimeInSeconds = 3;

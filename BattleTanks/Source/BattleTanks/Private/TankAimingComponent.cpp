@@ -58,6 +58,7 @@ void UTankAimingComponent::Initialise(UTankBarrel* BarrelToSet, UTankTurret* Tur
 	Turret = TurretToSet;
 }
 
+// Called every tick by Player Controllers
 void UTankAimingComponent::AimAt(FVector HitLocation)
 {
 	if (!ensure(Barrel))
@@ -65,11 +66,26 @@ void UTankAimingComponent::AimAt(FVector HitLocation)
 		return;
 	}
 	FVector OutLaunchVelocity;
-	FVector StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
-	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(this, OutLaunchVelocity, StartLocation, HitLocation, LaunchSpeed, false, 0, 0, ESuggestProjVelocityTraceOption::DoNotTrace);
+	StartLocation = Barrel->GetSocketLocation(FName("Projectile"));
+	bool bHaveAimSolution = UGameplayStatics::SuggestProjectileVelocity(
+		this, 
+		OutLaunchVelocity, 
+		StartLocation, 
+		HitLocation, 
+		LaunchSpeed, 
+		false, 
+		0, 
+		0, 
+		ESuggestProjVelocityTraceOption::DoNotTrace,
+		FCollisionResponseParams::DefaultResponseParam,
+		TArray<AActor*>(),
+		false //bDrawDebug
+	);
 	if (bHaveAimSolution)
 	{
+
 		AimDirection = OutLaunchVelocity.GetSafeNormal();
+		InitialVelocity = OutLaunchVelocity;
 		MoveBarrelTowards(AimDirection);
 	}
 	// If no solution found do nothing
@@ -125,4 +141,14 @@ EFiringState UTankAimingComponent::GetFiringState() const
 int32 UTankAimingComponent::GetRoundsLeft() const
 {
 	return RoundsLeft;
+}
+
+FVector UTankAimingComponent::GetStartLocation() const
+{
+	return StartLocation;
+}
+
+FVector UTankAimingComponent::GetInitialVelocity() const
+{
+	return InitialVelocity;
 }
