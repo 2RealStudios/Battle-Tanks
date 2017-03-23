@@ -24,6 +24,9 @@ AProjectile::AProjectile()
 
 	ProjectileMovementComponent = CreateDefaultSubobject<UProjectileMovementComponent>(FName("Projectile Movement"));
 	ProjectileMovementComponent->bAutoActivate = false;
+	ProjectileMovementComponent->MaxSpeed = 0;
+	ProjectileMovementComponent->InitialSpeed = 0;
+	ProjectileMovementComponent->Velocity = FVector(0);
 
 	ExplosionForce = CreateDefaultSubobject<URadialForceComponent>(FName("Explosion Force"));
 	ExplosionForce->AttachToComponent(RootComponent, FAttachmentTransformRules::KeepRelativeTransform);
@@ -57,6 +60,6 @@ void AProjectile::OnTimerExpire()
 
 void AProjectile::LaunchProjectile(float Speed)
 {
-	ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
+    ProjectileMovementComponent->SetVelocityInLocalSpace(FVector::ForwardVector * Speed);
 	ProjectileMovementComponent->Activate(true);
 }
