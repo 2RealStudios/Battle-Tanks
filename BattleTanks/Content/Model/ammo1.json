@@ -1,0 +1,9 @@
+{
+    "parent": "fuel1",
+    "meshes": [
+        {
+            "name": "ItemMesh",
+            "path": "/Engine/BasicShapes/Sphere.Sphere"
+        }
+    ]
+}			

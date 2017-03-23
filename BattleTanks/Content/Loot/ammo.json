@@ -1,0 +1,18 @@
+[
+    {
+        "name": "ammo1",
+        "weight": 30
+    },
+    {
+        "name": "ammo5",
+        "weight": 15
+    },
+    {
+        "name": "ammo10",
+        "weight": 5
+    },
+    {
+        "name": "ammo20",
+        "weight": 1
+    }
+]

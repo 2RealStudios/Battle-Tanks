@@ -1,0 +1,93 @@
+JSON Model this allows the preloading of mesh and materials for Items
+As of right now it tends to have a delay when the Item is first spawned in to the world 
+
+
+"parent" the model this model extends assumed none if not defined
+"meshs" is the array of the meshes to use Note does not have to be used but helpful for child models
+"materials" is the array of the materials to use Note does not have to be used but helpful for child models
+		
+elements in both the meshs and materials arrays
+"name" is a unquie identifier to find this mesh/material for the compoent
+"path" is the path to the mesh/material
+
+		
+"components" is the array that holds the details of the StaticMeshComponents that this model needs to generate
+
+for each element inside of the components array
+"name" is the name of the StaticMeshComponent
+"path" is path to mesh or the unquie identifier as stated above
+"materials" is the array of materials that go on the mesh
+scale
+rotation
+location
+"parentComponent" is the componet this component needs to be attached to assumed attach to root if not defined
+"parentSocket" is the socket of the parentComponent this component needs to be set to assumed not used if not defined or parentComponent is not defined
+
+for each element inside of the materials array
+"path" is the path to the material or the unquie identifier as stated above
+"index" is the material index
+		
+
+
+
+example json model (example used here is fuel)
+
+
+
+
+{
+    "meshs": [
+		{
+			"name":"ItemMesh",
+			"path":"/Engine/BasicShapes/Cube.Cube"
+		}
+    ],
+	"materials":[
+		{
+			"name":"ItemColor",
+			"path":"/Game/Item/M_Item1.M_Item1"
+		}	
+	],
+	"components": [
+		{
+			"name":"Main Mesh",
+			"path":"$ItemMesh",
+            "materials": [
+                {
+					"path":"$ItemColor",
+					"index":0
+				}
+            ]
+		}
+		
+		
+	]
+}	
+
+
+basically converts to (which is the current system that has to be done for EVERY item)
+
+UStaticMeshComponent* Mesh = NewObject<UStaticMeshComponent>(LootActor);
+if (Mesh)
+{
+	Mesh->RegisterComponent();
+	Mesh->AttachToComponent(LootActor->GetRootComponent(), FAttachmentTransformRules::KeepRelativeTransform);
+}
+
+auto ItemMesh = GetStaticMesh(TEXT("/Engine/BasicShapes/Cube.Cube")); // Finds cube static mesh
+
+auto Material = GetMaterial(TEXT("/Game/Item/M_Item1.M_Item1"); // Finds item material
+	
+if (ItemMesh)
+{
+	Mesh->SetStaticMesh(ItemMesh);
+	Mesh->SetWorldScale3D(FVector(1));
+	if (Material)
+	{
+		Mesh->SetMaterial(0, Material);
+	}
+}
+else
+{
+	//UE_LOG(LogTemp, Warning, TEXT("Unable to find cube?"));
+}

@@ -1,0 +1,31 @@
+{
+    "meshes": [
+        {
+            "name":"ItemMesh",
+            "path":"/Engine/BasicShapes/Cube.Cube"
+        }
+    ],
+    "materials":[
+        {
+            "name":"ItemColor",
+            "path":"/Game/Item/M_Item1.M_Item1"
+        }	
+    ],
+    "components": [
+        {
+            "name":"Main Mesh",
+            "path":"$ItemMesh",
+            "materials": [
+                {
+                    "path": "$ItemColor",
+                    "index": 0
+                }
+            ],
+            "scale": [ 1, 1, 1 ],
+            "rotation": [ 0, 0, 0 ],
+            "location": [ 1, 1, 1 ],
+            "parentComponent": "",
+            "parentSocket": ""
+        }
+    ]
+}			
