@@ -30,13 +30,16 @@ public:
 private:
 
 	// The map holding all references to the loot tables
+	UPROPERTY()
 	TMap<FString, ULootTable*> Tables;
 
 	// A local reference of the "empty" action for ease of reference
-	UAction* EMPTY;
+	UPROPERTY()
+		UAction* EMPTY;
 
 	// A local reference of the action manager for ease of reference
-	UActionManager* ActionManager;
+	UPROPERTY()
+		UActionManager* ActionManager;
 
 	// Used internally to populate the Tables map
 	TMap<FString, ULootTable*> LoadTables();

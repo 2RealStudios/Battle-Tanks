@@ -27,8 +27,12 @@ public:
 	UModelManager* GetModelManager();
 private:
 	virtual void  Init() override;
+	UPROPERTY()
 	ULootManager* LootManager;
+	UPROPERTY()
 	UActionManager* ActionManager;
+	UPROPERTY()
 	UItemManager* ItemManager;
+	UPROPERTY()
 	UModelManager* ModelManager;
 };

@@ -26,10 +26,12 @@ public:
 
 private:
 	// The map holding all references to the mdoels
+	UPROPERTY()
 	TMap<FString, UJsonModel*> Models;
 
 	// A blank model to default to in case a model is requested for a name that doesn't exist
-	UJsonModel* EMPTY;
+	UPROPERTY()
+		UJsonModel* EMPTY;
 
 	// Used internally to populate the Models map with models
 	TMap<FString, UJsonModel*> LoadModels();

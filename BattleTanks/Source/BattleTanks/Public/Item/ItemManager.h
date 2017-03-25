@@ -31,6 +31,7 @@ public:
 private:
 
 	// The map holding all references to the items
+	UPROPERTY()
 	TMap<FString, UItem*> Items;
 
 	// The "null" item
