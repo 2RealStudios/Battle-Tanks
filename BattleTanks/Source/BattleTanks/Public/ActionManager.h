@@ -37,12 +37,15 @@ private:
 	void AddEmpty();
 
 	// The map holding all references to the actions future?:(except for spawning actions)
+	UPROPERTY()
 	TMap<FString, UAction*> Actions;
 
 	// The reference to the "empty" action
+	UPROPERTY()
 	UAction* EMPTY;
 
 	// The local reference to the Item Manager for this manager to use
+	UPROPERTY()
 	UItemManager* ItemManager;
 
 	// A helper method to register a spawn action
