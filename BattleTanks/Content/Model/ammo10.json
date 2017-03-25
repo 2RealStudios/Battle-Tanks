@@ -1,9 +1,9 @@
 {
     "parent": "ammo1",
-    "materials": [
+    "meshes": [
         {
-            "name": "ItemColor",
-            "path": "/Game/Item/M_Item10.M_Item10"
+            "name": "ItemMesh",
+            "path": "/Game/Item/TripleBullet.TripleBullet"
         }
     ]
 }		

@@ -1,9 +1,15 @@
 {
     "parent": "fuel1",
+    "materials": [
+        {
+            "name": "ItemColor",
+            "path": "/Game/Item/M_Bullet.M_Bullet"
+        }
+    ],
     "meshes": [
         {
             "name": "ItemMesh",
-            "path": "/Engine/BasicShapes/Sphere.Sphere"
+            "path": "/Game/Item/SingleBullet.SingleBullet"
         }
     ]
 }			
