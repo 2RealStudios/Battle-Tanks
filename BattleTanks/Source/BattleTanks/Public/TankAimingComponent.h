@@ -36,7 +36,7 @@ public:
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
 	UFUNCTION(BlueprintCallable, Category = "Firing")
-	void Fire();
+	void Fire(int32 RoundsLeft);
 
 	EFiringState GetFiringState() const;
 	
@@ -79,10 +79,10 @@ private:
 	FVector InitialVelocity = FVector(0);
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	float ReloadTimeInSeconds = 3;
+	float ReloadTimeInSeconds = 0.0f;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Firing")
-	int32 RoundsLeft = 3;
+	int32 RoundsLeft = 25;
 
 	double LastFireTime = 0;
 
