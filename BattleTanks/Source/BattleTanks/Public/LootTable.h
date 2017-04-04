@@ -24,6 +24,7 @@ public:
 private:
 
 	// The array of entries in the table 
+	UPROPERTY()
 	TArray<ULootTableEntry*> table;
 
 	// The total weight of the table used to prevent constant recalculation of weight

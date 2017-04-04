@@ -3,6 +3,7 @@
 #pragma once
 
 #include "UObject/NoExportTypes.h"
+#include "Tank.h"
 #include "Item.generated.h"
 
 /**
@@ -13,7 +14,7 @@ class BATTLETANKS_API UItem : public UObject
 {
 	GENERATED_BODY()
 
-//public:
-	//virtual void OnCollide(AActor* Actor)?
+public:
+	virtual void OnCollide(ATank* Actor);
 };
 

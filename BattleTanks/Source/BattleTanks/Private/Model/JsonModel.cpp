@@ -234,7 +234,7 @@ TMap<FString, USceneComponent*> UJsonModel::AttachToActor(AActor* Actor)
 				}
 
 				UStaticMeshComponent* Mesh = NewObject<UStaticMeshComponent>(Actor, FName(*JsonComponent->Name)); // Create UStaticMeshComponent
-
+				Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 				if (Mesh) // register component if created if not continue loop
 				{
 					Mesh->RegisterComponent();
