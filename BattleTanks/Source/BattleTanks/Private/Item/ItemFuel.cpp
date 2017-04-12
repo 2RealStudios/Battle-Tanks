@@ -6,5 +6,6 @@
 
 void UItemFuel::OnCollide(ATank* Actor)
 {
-	// Actor->AddFuel(Amount);
+	//BlueprintImplementableEvent
+	Actor->AddFuel(Amount);
 }

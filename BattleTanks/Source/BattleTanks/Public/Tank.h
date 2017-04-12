@@ -22,6 +22,12 @@ public:
 
 	FTankDelegate OnDeath;
 
+	UFUNCTION(BlueprintImplementableEvent, Category = "Gas")
+	void AddFuel(float Amount);
+
+	UFUNCTION(BlueprintImplementableEvent, Category = "Ammo")
+	void AddAmmo(int32 Amount);
+
 private:
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
 	int32 StartingHealth = 100;
