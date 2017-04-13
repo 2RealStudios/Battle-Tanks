@@ -3,6 +3,8 @@
 #include "BattleTanks.h"
 #include "MotionControllerComponent.h"
 #include "WidgetInteractionComponent.h"
+#include "TankGameInstance.h"
+#include "SoundManager.h"
 #include "MainMenuCharacter.h"
 
 
@@ -105,7 +107,11 @@ void AMainMenuCharacter::InteractWithMenu()
 	if (WidgetInteraction->IsOverFocusableWidget())
 	{
 		WidgetInteraction->PressPointerKey(EKeys::LeftMouseButton); // Simulates a mouse click on the menu
-		UGameplayStatics::PlaySound2D(this, MainMenuSelectSound, 0.5f, 1.0f, 0.0f, nullptr);
+		UTankGameInstance* GameInstance = Cast<UTankGameInstance>(GetGameInstance());
+		USoundManager* SoundManager = GameInstance->GetSoundManager();
+		SoundManager->PlaySound("MainMenuSelect",this, 0.5f, 1.0f, 0.0f, nullptr);
+
+		//UGameplayStatics::PlaySound2D(this, MainMenuSelectSound, 0.5f, 1.0f, 0.0f, nullptr);
 	}
 
 }

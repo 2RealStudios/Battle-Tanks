@@ -5,6 +5,7 @@
 #include "LootManager.h"
 #include "ActionManager.h"
 #include "Model/ModelManager.h"
+#include "SoundManager.h"
 #include "TankGameInstance.h"
 
 
@@ -15,6 +16,7 @@ UTankGameInstance::UTankGameInstance()
 	ModelManager = NewObject<UModelManager>();
 	LootManager = NewObject<ULootManager>();
 	ActionManager = NewObject<UActionManager>();
+	SoundManager = NewObject<USoundManager>();
 }
 
 void  UTankGameInstance::Init()
@@ -26,6 +28,12 @@ void  UTankGameInstance::Init()
 	ActionManager->Init(this);
 	LootManager->Init(this);
 	ModelManager->Init(this);
+	SoundManager->Init(this);
+}
+
+USoundManager* UTankGameInstance::GetSoundManager()
+{
+	return SoundManager;
 }
 
 UModelManager* UTankGameInstance::GetModelManager()

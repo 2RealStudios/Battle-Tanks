@@ -9,7 +9,7 @@ class ULootManager;
 class UActionManager;
 class UItemManager;
 class UModelManager;
-
+class USoundManager;
 /**
  * 
  */
@@ -25,6 +25,7 @@ public:
 	UActionManager* GetActionManager();
 	UItemManager* GetItemManager();
 	UModelManager* GetModelManager();
+	USoundManager* GetSoundManager();
 
 protected:
 	virtual void  Init() override;
@@ -40,4 +41,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UModelManager* ModelManager;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
+	USoundManager* SoundManager;
 };
