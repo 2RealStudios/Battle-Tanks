@@ -4,11 +4,11 @@
 #include "Item/Item.h"
 #include "Item/ItemFuel.h"
 #include "Item/ItemAmmo.h"
+#include "TankGameInstance.h"
 #include "ItemManager.h"
 
 UItemManager::UItemManager()
 {
-	Items = AddItems();
 }
 
 
@@ -21,6 +21,11 @@ UItem* UItemManager::GetItem(FString ItemName)
 		return Items[ItemName];
 	}
 	return GetNullItem();
+}
+
+void UItemManager::Init(UTankGameInstance* GameInstance)
+{
+	Items = AddItems();
 }
 
 UItem* UItemManager::GetNullItem()
@@ -40,6 +45,8 @@ FString UItemManager::GetItemName(UItem* Item)
 
 TMap<FString, UItem*> UItemManager::AddItems()
 {
+	UE_LOG(LogTemp, Warning, TEXT("Adding Items"))
+
 	TMap<FString, UItem*> Items;
 	NULL_ITEM = NewObject<UItem>();
 	Items.Add(FString("empty"), NULL_ITEM);

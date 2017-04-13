@@ -4,12 +4,19 @@
 #include "LootTable.h"
 #include "Action.h"
 #include "ActionManager.h"
+#include "TankGameInstance.h"
 #include "LootManager.h"
 
 ULootManager::ULootManager()
 {
-	Tables = LoadTables();
 }
+
+void ULootManager::Init(UTankGameInstance* GameInstance)
+{
+	Tables = LoadTables();
+	SetActionManager(GameInstance->GetActionManager());
+}
+
 
 TMap<FString, ULootTable*> ULootManager::LoadTables()
 {

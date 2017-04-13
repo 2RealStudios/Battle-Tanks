@@ -8,6 +8,7 @@
 class ULootTable;
 class UActionManager;
 class UAction;
+class UTankGameInstance;
 
 /**
  * Holds all the loot tables for later use
@@ -26,6 +27,8 @@ public:
 
 	// Sets the action manager for a local reference
 	void SetActionManager(UActionManager* ActionManagerToSet);
+	
+	void Init(UTankGameInstance* GameInstance);
 
 private:
 

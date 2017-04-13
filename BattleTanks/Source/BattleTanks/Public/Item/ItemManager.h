@@ -6,6 +6,7 @@
 #include "ItemManager.generated.h"
 
 class UItem;
+class UTankGameInstance;
 
 /**
  * Holds all the items for later use 
@@ -28,6 +29,8 @@ public:
 	// Gets the name associated with the passed item
 	FString GetItemName(UItem* Item);
 
+	void Init(UTankGameInstance* GameInstance);
+
 private:
 
 	// The map holding all references to the items
@@ -39,4 +42,5 @@ private:
 
 	// Used internally to populate the Items map with items
 	TMap<FString, UItem*> AddItems();
+
 };

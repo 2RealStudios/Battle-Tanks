@@ -5,7 +5,14 @@
 #include "Actions/SpawnAction.h"
 #include "Item/ItemManager.h"
 #include "Item/Item.h"
+#include "TankGameInstance.h"
 #include "ActionManager.h"
+
+
+void UActionManager::Init(UTankGameInstance* GameInstance)
+{
+	AddActions(GameInstance->GetItemManager());
+}
 
 bool UActionManager::AddActions(UItemManager* ItemManagerToSet)
 {

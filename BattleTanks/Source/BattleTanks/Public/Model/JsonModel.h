@@ -30,6 +30,8 @@ public:
 	// Attach this model to the LootActor provided
 	TMap<FString, USceneComponent*> AttachToActor(AActor* Actor);
 
+
+
 private:
 
 	// This models parent model
@@ -53,6 +55,8 @@ private:
 
 	//
 	UJsonComponent* BuildCompsiteComponent(UJsonModel* Model, UJsonComponent* JsonComponent);
+
+	UJsonComponent* BuildCompsiteComponent(UJsonComponent* Parent, UJsonComponent* JsonComponent);
 
 	// Clones this model and return a new instance
 	UJsonModel* Clone();

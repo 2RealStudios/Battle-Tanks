@@ -11,23 +11,21 @@
 UTankGameInstance::UTankGameInstance()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Custom Game Instance Created"))
+	ItemManager = NewObject<UItemManager>();
+	ModelManager = NewObject<UModelManager>();
+	LootManager = NewObject<ULootManager>();
+	ActionManager = NewObject<UActionManager>();
 }
 
 void  UTankGameInstance::Init()
 {
 	Super::Init();
 	UE_LOG(LogTemp, Warning, TEXT("Custom Game Instance::Init()"))
-
-	ItemManager = NewObject<UItemManager>();
-
-	ActionManager = NewObject<UActionManager>();
-	ActionManager->AddActions(ItemManager);
-
-	LootManager = NewObject<ULootManager>();
-	LootManager->SetActionManager(ActionManager);
-
-	ModelManager = NewObject<UModelManager>();
-	ModelManager->PreloadModelAssets();
+	
+	ItemManager->Init(this);
+	ActionManager->Init(this);
+	LootManager->Init(this);
+	ModelManager->Init(this);
 }
 
 UModelManager* UTankGameInstance::GetModelManager()

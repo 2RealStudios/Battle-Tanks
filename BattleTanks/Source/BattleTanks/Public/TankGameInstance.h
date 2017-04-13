@@ -25,14 +25,19 @@ public:
 	UActionManager* GetActionManager();
 	UItemManager* GetItemManager();
 	UModelManager* GetModelManager();
-private:
+
+protected:
 	virtual void  Init() override;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	ULootManager* LootManager;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UActionManager* ActionManager;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UItemManager* ItemManager;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UModelManager* ModelManager;
 };

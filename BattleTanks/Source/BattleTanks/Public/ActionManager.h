@@ -8,6 +8,7 @@
 class UItemManager;
 class UAction;
 class UItem;
+class UTankGameInstance;
 
 /**
  * Holds all the actions for later use
@@ -31,6 +32,8 @@ public:
 	// Get the "empty" action reference
 	UAction* GetEmpty();
 
+	void Init(UTankGameInstance* GameInstance);
+
 private:
 
 	// Handles adding the "empty" action to the Actions map and setting the variable for it
@@ -50,5 +53,4 @@ private:
 
 	// A helper method to register a spawn action
 	void AddSpawnAction(FString ActionName, UItem* Item);
-	
 };
