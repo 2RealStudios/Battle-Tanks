@@ -28,13 +28,7 @@ void USoundManager::PlaySound(FString SoundName, const UObject * WorldContextObj
 
 void USoundManager::PlaySoundAt(FString SoundName, const UObject* WorldContextObject, FVector Location, float VolumeMultiplier , float PitchMultiplier , float StartTime, class USoundAttenuation* AttenuationSettings , class USoundConcurrency* ConcurrencySettings)
 {
-	USoundBase* Sound = GetSound(SoundName);
-	if (!Sound)
-	{
-		UE_LOG(LogTemp, Warning, TEXT("Sound with name: %s not found"), *SoundName)
-			return;
-	}
-	UGameplayStatics::PlaySoundAtLocation(WorldContextObject, Sound, Location, VolumeMultiplier, PitchMultiplier, StartTime, AttenuationSettings, ConcurrencySettings);
+	PlaySoundAtR(SoundName, WorldContextObject, Location, FRotator::ZeroRotator, VolumeMultiplier, PitchMultiplier, StartTime, AttenuationSettings, ConcurrencySettings);
 }
 
 void USoundManager::PlaySoundAtR(FString SoundName, const UObject* WorldContextObject, FVector Location, FRotator Rotation, float VolumeMultiplier, float PitchMultiplier, float StartTime, class USoundAttenuation* AttenuationSettings, class USoundConcurrency* ConcurrencySettings)
