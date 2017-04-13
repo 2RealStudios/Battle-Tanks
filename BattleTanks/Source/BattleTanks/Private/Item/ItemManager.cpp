@@ -51,18 +51,26 @@ TMap<FString, UItem*> UItemManager::AddItems()
 	NULL_ITEM = NewObject<UItem>();
 	Items.Add(FString("empty"), NULL_ITEM);
 
-	int amounts[] = {1, 5, 10, 20};
+	int FuelAmounts[] = {5, 25, 50, 100};
 
-	for (int amount : amounts)
+	for (int amount : FuelAmounts)
 	{
 		auto Fuel = NewObject<UItemFuel>();
 		Fuel->Amount = amount;
 		Items.Add(FString("fuel") + FString::FromInt(amount), Fuel);
 		
+		
+	}
+
+	int AmmoAmounts[] = {1, 5, 10, 20};
+
+	for (int amount : AmmoAmounts)
+	{
 		auto Ammo = NewObject<UItemAmmo>();
 		Ammo->Amount = amount;
 		Items.Add(FString("ammo") + FString::FromInt(amount), Ammo);
 	}
+
 	return Items;
 
 }

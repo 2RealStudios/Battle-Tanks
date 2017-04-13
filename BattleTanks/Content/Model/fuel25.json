@@ -1,9 +1,9 @@
-{
-    "parent": "fuel1",
+{    
+    "parent": "fuel5",
     "materials": [
         {
             "name": "ItemColor",
-            "path": "/Game/Item/M_Item20.M_Item20"
+            "path": "/Game/Item/M_Item5.M_Item5"
         }
     ]
 }			

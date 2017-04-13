@@ -1,9 +1,15 @@
-{    
-    "parent": "fuel1",
-    "materials": [
+{
+    "parent": "base",
+    "meshes": [
         {
-            "name": "ItemColor",
-            "path": "/Game/Item/M_Item5.M_Item5"
+            "name":"ItemMesh",
+            "path":"/Engine/BasicShapes/Cube.Cube"
         }
+    ],
+    "materials":[
+        {
+            "name":"ItemColor",
+            "path":"/Game/Item/M_Item1.M_Item1"
+        }	
     ]
 }			
