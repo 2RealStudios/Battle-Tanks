@@ -21,12 +21,15 @@ public:
 	UItemManager();
 
 	// Get the item associated with the provided name. Returns a "null" item if the name does not have an item associated with it
+	UFUNCTION(BlueprintCallable, Category = "Item")
 	UItem* GetItem(FString ItemName);
 
 	// Gets the "null" item
+	UFUNCTION(BlueprintCallable, Category = "Item")
 	UItem* GetNullItem();
 
 	// Gets the name associated with the passed item
+	UFUNCTION(BlueprintCallable, Category = "Item")
 	FString GetItemName(UItem* Item);
 
 	void Init(UTankGameInstance* GameInstance);

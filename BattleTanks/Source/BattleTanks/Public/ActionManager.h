@@ -27,6 +27,7 @@ public:
 	bool AddActions(UItemManager* ItemManagerToSet);
 
 	// Get the action associated with the provided name. Returns a "empty" action if the name does not have an action associated with it
+	UFUNCTION(BlueprintCallable, Category = "Action")
 	UAction* GetAction(FString ActionName);
 
 	// Get the "empty" action reference

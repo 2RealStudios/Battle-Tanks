@@ -37,7 +37,7 @@ void USoundManager::PlaySoundAt(FString SoundName, const UObject* WorldContextOb
 	UGameplayStatics::PlaySoundAtLocation(WorldContextObject, Sound, Location, VolumeMultiplier, PitchMultiplier, StartTime, AttenuationSettings, ConcurrencySettings);
 }
 
-void USoundManager::PlaySoundAt(FString SoundName, const UObject* WorldContextObject, FVector Location, FRotator Rotation, float VolumeMultiplier, float PitchMultiplier, float StartTime, class USoundAttenuation* AttenuationSettings, class USoundConcurrency* ConcurrencySettings)
+void USoundManager::PlaySoundAtR(FString SoundName, const UObject* WorldContextObject, FVector Location, FRotator Rotation, float VolumeMultiplier, float PitchMultiplier, float StartTime, class USoundAttenuation* AttenuationSettings, class USoundConcurrency* ConcurrencySettings)
 {
 	USoundBase* Sound = GetSound(SoundName);
 	if (!Sound) 

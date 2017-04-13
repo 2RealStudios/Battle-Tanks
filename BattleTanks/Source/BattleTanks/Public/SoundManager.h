@@ -19,11 +19,14 @@ public:
 
 	void Init(UTankGameInstance* GameInstance);
 
+	UFUNCTION(BlueprintCallable, Category = "Sound")
 	void PlaySound(FString SoundName, const UObject* WorldContextObject, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundConcurrency* ConcurrencySettings = nullptr);
 
+	UFUNCTION(BlueprintCallable, Category = "Sound")
 	void PlaySoundAt(FString SoundName, const UObject* WorldContextObject, FVector Location, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundAttenuation* AttenuationSettings = nullptr, class USoundConcurrency* ConcurrencySettings = nullptr);
 	
-	void PlaySoundAt(FString SoundName, const UObject* WorldContextObject, FVector Location, FRotator Rotation, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundAttenuation* AttenuationSettings = nullptr, class USoundConcurrency* ConcurrencySettings = nullptr);
+	UFUNCTION(BlueprintCallable, Category = "Sound")
+	void PlaySoundAtR(FString SoundName, const UObject* WorldContextObject, FVector Location, FRotator Rotation, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundAttenuation* AttenuationSettings = nullptr, class USoundConcurrency* ConcurrencySettings = nullptr);
 
 private:
 	// The map holding all references to the items

@@ -23,6 +23,7 @@ public:
 	ULootManager();
 
 	// Get action from the table associated with the provided name
+	UFUNCTION(BlueprintCallable, Category = "Loot")
 	UAction* GetLoot(FString TableName);
 
 	// Sets the action manager for a local reference
@@ -38,11 +39,11 @@ private:
 
 	// A local reference of the "empty" action for ease of reference
 	UPROPERTY()
-		UAction* EMPTY;
+	UAction* EMPTY;
 
 	// A local reference of the action manager for ease of reference
 	UPROPERTY()
-		UActionManager* ActionManager;
+	UActionManager* ActionManager;
 
 	// Used internally to populate the Tables map
 	TMap<FString, ULootTable*> LoadTables();

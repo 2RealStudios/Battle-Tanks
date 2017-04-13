@@ -21,6 +21,7 @@ public:
 	UModelManager();
 
 	// Get the model associated with the provided name 
+	UFUNCTION(BlueprintCallable, Category = "Model")
 	UJsonModel* GetModel(FString ModelName);
 
 	// Preload the model assets (mesh, materials, etc.) so there is no delay when the model is being used
