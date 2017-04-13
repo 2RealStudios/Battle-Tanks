@@ -79,5 +79,13 @@ void ALootActor::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	float SineFactor = 2.f;
+	float Height = 20.f;
+
+	FVector NewLocation = GetActorLocation();
+	float DeltaHeight = (FMath::Sin((RunningTime + DeltaTime) * SineFactor) - FMath::Sin(RunningTime * SineFactor));
+	NewLocation.Z += DeltaHeight * Height;
+	RunningTime += DeltaTime;
+	SetActorLocation(NewLocation);
 }
 
