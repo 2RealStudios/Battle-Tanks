@@ -3,13 +3,28 @@
     "meshes": [
         {
             "name":"ItemMesh",
-            "path":"/Engine/BasicShapes/Cube.Cube"
+            "path":"/Game/Item/5GallonCan.5GallonCan"
         }
     ],
-    "materials":[
+    "materials": [
         {
-            "name":"ItemColor",
-            "path":"/Game/Item/M_Item1.M_Item1"
-        }	
+            "name": "ItemColor",
+            "path": "/Game/Item/M_GasCanHandleNozzle.M_GasCanHandleNozzle"
+        },
+        {
+            "name": "ItemColor2",
+            "path": "/Game/Item/M_GasCanBase.M_GasCanBase"
+        }
+    ],
+    "components": [
+        {
+            "name": "Main Mesh",
+            "materials": [
+                {
+                    "path": "$ItemColor2",
+                    "index": 1
+                }
+            ]
+        }
     ]
 }			
