@@ -108,9 +108,11 @@ void AMainMenuCharacter::InteractWithMenu()
 	{
 		WidgetInteraction->PressPointerKey(EKeys::LeftMouseButton); // Simulates a mouse click on the menu
 		UTankGameInstance* GameInstance = Cast<UTankGameInstance>(GetGameInstance());
-		USoundManager* SoundManager = GameInstance->GetSoundManager();
-		SoundManager->PlaySound("MainMenuSelect",this, 0.5f, 1.0f, 0.0f, nullptr);
-
+		if (GameInstance)
+		{
+			USoundManager* SoundManager = GameInstance->GetSoundManager();
+			SoundManager->PlaySound("MainMenuSelect", this, 0.5f, 1.0f, 0.0f, nullptr);
+		}
 		//UGameplayStatics::PlaySound2D(this, MainMenuSelectSound, 0.5f, 1.0f, 0.0f, nullptr);
 	}
 
