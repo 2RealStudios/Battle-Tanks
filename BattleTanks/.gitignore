@@ -62,3 +62,6 @@ Intermediate/*
 
 # Cache files for the editor to use
 DerivedDataCache/*
+
+# Placeholder Animation Folder (will remove once we get actual animations in)
+AnimStarterPack/*
