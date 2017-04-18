@@ -5,5 +5,5 @@
 
 void UItemAmmo::OnCollide(ATank* Actor) 
 {
-	// Actor->AddAmmo(Amount);
+	Actor->AddAmmo(Amount);
 }
