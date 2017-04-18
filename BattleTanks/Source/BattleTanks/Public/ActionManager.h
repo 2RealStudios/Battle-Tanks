@@ -8,6 +8,7 @@
 class UItemManager;
 class UAction;
 class UItem;
+class UTankGameInstance;
 
 /**
  * Holds all the actions for later use
@@ -26,10 +27,13 @@ public:
 	bool AddActions(UItemManager* ItemManagerToSet);
 
 	// Get the action associated with the provided name. Returns a "empty" action if the name does not have an action associated with it
+	UFUNCTION(BlueprintCallable, Category = "Action")
 	UAction* GetAction(FString ActionName);
 
 	// Get the "empty" action reference
 	UAction* GetEmpty();
+
+	void Init(UTankGameInstance* GameInstance);
 
 private:
 
@@ -50,5 +54,4 @@ private:
 
 	// A helper method to register a spawn action
 	void AddSpawnAction(FString ActionName, UItem* Item);
-	
 };

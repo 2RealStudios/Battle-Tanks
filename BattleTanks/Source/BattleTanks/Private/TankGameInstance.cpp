@@ -5,29 +5,35 @@
 #include "LootManager.h"
 #include "ActionManager.h"
 #include "Model/ModelManager.h"
+#include "SoundManager.h"
 #include "TankGameInstance.h"
 
 
 UTankGameInstance::UTankGameInstance()
 {
 	UE_LOG(LogTemp, Warning, TEXT("Custom Game Instance Created"))
+	ItemManager = NewObject<UItemManager>();
+	ModelManager = NewObject<UModelManager>();
+	LootManager = NewObject<ULootManager>();
+	ActionManager = NewObject<UActionManager>();
+	SoundManager = NewObject<USoundManager>();
 }
 
 void  UTankGameInstance::Init()
 {
 	Super::Init();
 	UE_LOG(LogTemp, Warning, TEXT("Custom Game Instance::Init()"))
+	
+	ItemManager->Init(this);
+	ActionManager->Init(this);
+	LootManager->Init(this);
+	ModelManager->Init(this);
+	SoundManager->Init(this);
+}
 
-	ItemManager = NewObject<UItemManager>();
-
-	ActionManager = NewObject<UActionManager>();
-	ActionManager->AddActions(ItemManager);
-
-	LootManager = NewObject<ULootManager>();
-	LootManager->SetActionManager(ActionManager);
-
-	ModelManager = NewObject<UModelManager>();
-	ModelManager->PreloadModelAssets();
+USoundManager* UTankGameInstance::GetSoundManager()
+{
+	return SoundManager;
 }
 
 UModelManager* UTankGameInstance::GetModelManager()

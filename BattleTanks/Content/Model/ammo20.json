@@ -1,9 +1,15 @@
 {
-    "parent": "ammo1",
-    "materials": [
-        {
-            "name": "ItemColor",
-            "path": "/Game/Item/M_Item20.M_Item20"
-        }
+    "parent": "ammo10",
+    "components": [
+      {
+        "name": "Main Mesh",
+        "location": [ 10, 0, 0]
+      },
+      {
+        "parent": "Main Mesh", 
+        "name": "Main Mesh2",
+        "location": [ -10, 0, 0 ]
+
+      }
     ]
 }		

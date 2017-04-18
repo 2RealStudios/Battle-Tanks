@@ -1,5 +1,5 @@
 {
-    "parent": "fuel1",
+    "parent": "base",
     "materials": [
         {
             "name": "ItemColor",

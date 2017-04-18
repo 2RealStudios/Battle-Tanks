@@ -1,6 +1,7 @@
 
 
 #include "BattleTanks.h"
+#include "TankGameInstance.h"
 #include "ModelManager.h"
 
 UModelManager::UModelManager()
@@ -8,8 +9,14 @@ UModelManager::UModelManager()
 	EMPTY = NewObject<UJsonModel>(); // Create empty model as a default
 	EMPTY->Name = FString("EMPTY");
 
-	Models = LoadModels(); // Load models and set them to get around an annoying bug
 }
+
+void UModelManager::Init(UTankGameInstance* GameInstance)
+{
+	Models = LoadModels(); // Load models and set them to get around an annoying bug
+	PreloadModelAssets();
+}
+
 
 TMap<FString, UJsonModel*> UModelManager::LoadModels()
 {

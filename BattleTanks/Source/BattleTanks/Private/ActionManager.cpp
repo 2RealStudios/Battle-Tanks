@@ -5,7 +5,14 @@
 #include "Actions/SpawnAction.h"
 #include "Item/ItemManager.h"
 #include "Item/Item.h"
+#include "TankGameInstance.h"
 #include "ActionManager.h"
+
+
+void UActionManager::Init(UTankGameInstance* GameInstance)
+{
+	AddActions(GameInstance->GetItemManager());
+}
 
 bool UActionManager::AddActions(UItemManager* ItemManagerToSet)
 {
@@ -17,15 +24,21 @@ bool UActionManager::AddActions(UItemManager* ItemManagerToSet)
 
 	int amounts[] = { 1, 5, 10, 20 };
 
+	int AmmoAmounts[] = { 1, 5, 10, 20 };
 	for (int amount : amounts)
 	{
-		FString FuelName = FString("fuel") + FString::FromInt(amount);
-		AddSpawnAction(FuelName, ItemManager->GetItem(FuelName));
-
 		FString AmmoName = FString("ammo") + FString::FromInt(amount);
 		AddSpawnAction(AmmoName, ItemManager->GetItem(AmmoName));
 	}
-	
+
+	int FuelAmounts[] = { 5, 25, 50, 100 };
+	for (int amount : FuelAmounts)
+	{
+		FString FuelName = FString("fuel") + FString::FromInt(amount);
+		AddSpawnAction(FuelName, ItemManager->GetItem(FuelName));
+	}
+
+
 	return true;
 }
 

@@ -9,7 +9,7 @@ class ULootManager;
 class UActionManager;
 class UItemManager;
 class UModelManager;
-
+class USoundManager;
 /**
  * 
  */
@@ -25,14 +25,23 @@ public:
 	UActionManager* GetActionManager();
 	UItemManager* GetItemManager();
 	UModelManager* GetModelManager();
-private:
+	USoundManager* GetSoundManager();
+
+protected:
 	virtual void  Init() override;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	ULootManager* LootManager;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UActionManager* ActionManager;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UItemManager* ItemManager;
-	UPROPERTY()
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
 	UModelManager* ModelManager;
+
+	UPROPERTY(BlueprintReadOnly, Category = "Setup")
+	USoundManager* SoundManager;
 };

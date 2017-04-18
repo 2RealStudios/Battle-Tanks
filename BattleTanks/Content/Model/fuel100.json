@@ -1,0 +1,13 @@
+{
+    "parent": "fuel5",
+     "materials": [
+        {
+            "name": "ItemColor",
+            "path": "/Game/Item/M_GasCanBase100Gallons.M_GasCanBase100Gallons"
+        },
+        {
+            "name": "ItemColor2",
+            "path": "/Game/Item/M_GasCanBase100Gallons.M_GasCanBase100Gallons"
+        }
+    ]
+}			

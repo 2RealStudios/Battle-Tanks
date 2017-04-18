@@ -340,7 +340,19 @@ UJsonModel* UJsonModel::BuildCompositeModel(UTankGameInstance* GameInstance)
 		ParentModel->Parent = Parent; // Set name just in case
 		ParentModel->Materials.Append(Materials); // Append to material map as it overrides values
 		ParentModel->Meshes.Append(Meshes); // Append to mesh map as it overrides values
-		ParentModel->Components.Append(Components); // Append to component map as it overrides values
+
+		for (auto& Elem : Components)
+		{
+			if (ParentModel->Components.Contains(Elem.Key))
+			{
+				UJsonComponent* Component = ParentModel->Components[Elem.Key]->Clone();
+				ParentModel->Components.Add(Elem.Key, BuildCompsiteComponent(Component, Elem.Value));
+			}
+			else
+			{
+				ParentModel->Components.Add(Elem.Key, Elem.Value);
+			}
+		}
 
 		// Return composite
 		return ParentModel;
@@ -358,22 +370,29 @@ UJsonComponent* UJsonModel::BuildCompsiteComponent(UJsonModel* Model, UJsonCompo
 
 	UJsonComponent* CompsiteComponent = BuildCompsiteComponent(Model, ParentComponent);  // Create composite of parent component
 
+	return BuildCompsiteComponent(CompsiteComponent, JsonComponent);
+
+}
+
+UJsonComponent* UJsonModel::BuildCompsiteComponent(UJsonComponent* CompsiteComponent, UJsonComponent* JsonComponent)
+{
+
 	// Update composite component with this component's information
 	CompsiteComponent->Parent = JsonComponent->Parent; // Set parent just in case
 	CompsiteComponent->Name = JsonComponent->Name; // Set proper name of component don't want duplicate component names
 
-	if(!JsonComponent->Path.IsEmpty()) // Only set if exists
+	if (!JsonComponent->Path.IsEmpty()) // Only set if exists
 		CompsiteComponent->Path = JsonComponent->Path;
 
 	CompsiteComponent->Materials.Append(JsonComponent->Materials); // Append to material map as it overrides values
 
-	if(CompsiteComponent->Scale != JsonComponent->Scale) // Only set if not equal
+	//if (CompsiteComponent->Scale != JsonComponent->Scale) // Only set if not equal
 		CompsiteComponent->Scale = JsonComponent->Scale;
 
-	if (CompsiteComponent->Rotation != JsonComponent->Rotation) // Only set if not equal
+	//if (CompsiteComponent->Rotation != JsonComponent->Rotation) // Only set if not equal
 		CompsiteComponent->Rotation = JsonComponent->Rotation;
-	
-	if (CompsiteComponent->Location != JsonComponent->Location) // Only set if not equal
+
+	//if (CompsiteComponent->Location != JsonComponent->Location) // Only set if not equal
 		CompsiteComponent->Location = JsonComponent->Location;
 
 	if (!JsonComponent->ParentComponent.IsEmpty()) // Only set if exists
@@ -385,8 +404,8 @@ UJsonComponent* UJsonModel::BuildCompsiteComponent(UJsonModel* Model, UJsonCompo
 			CompsiteComponent->ParentSocket = JsonComponent->ParentSocket;
 	}
 	return CompsiteComponent;
-
 }
+
 
 UJsonModel* UJsonModel::Clone()
 {
@@ -397,7 +416,8 @@ UJsonModel* UJsonModel::Clone()
 	Clone->Parent = Parent;
 	Clone->Materials = TMap<FString, FString>(Materials); // This creates a copy so that if one map is changed the other doesn't
 	Clone->Meshes = TMap<FString, FString>(Meshes);
-	Clone->Components= TMap<FString, UJsonComponent*>(Components);
+	Clone->Components = TMap<FString, UJsonComponent*>(Components);
+
 
 	return Clone;
 }

@@ -1,0 +1,9 @@
+{    
+    "parent": "fuel5",
+     "meshes": [
+        {
+            "name":"ItemMesh",
+            "path":"/Game/Item/25GallonCan.25GallonCan"
+        }
+    ]
+}			

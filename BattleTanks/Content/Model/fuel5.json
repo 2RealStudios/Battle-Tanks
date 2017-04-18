@@ -1,9 +1,30 @@
-{    
-    "parent": "fuel1",
+{
+    "parent": "base",
+    "meshes": [
+        {
+            "name":"ItemMesh",
+            "path":"/Game/Item/5GallonCan.5GallonCan"
+        }
+    ],
     "materials": [
         {
             "name": "ItemColor",
-            "path": "/Game/Item/M_Item5.M_Item5"
+            "path": "/Game/Item/M_GasCanHandleNozzle.M_GasCanHandleNozzle"
+        },
+        {
+            "name": "ItemColor2",
+            "path": "/Game/Item/M_GasCanBase.M_GasCanBase"
+        }
+    ],
+    "components": [
+        {
+            "name": "Main Mesh",
+            "materials": [
+                {
+                    "path": "$ItemColor2",
+                    "index": 1
+                }
+            ]
         }
     ]
 }			
