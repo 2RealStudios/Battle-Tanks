@@ -26,6 +26,15 @@ public:
 	// Called to bind functionality to input
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 
-	
-	
+	UFUNCTION(BlueprintCallable, meta = (Animation))
+	float GetTransitionAnimationSpeed();
+
+	UFUNCTION(BlueprintCallable, meta = (Animation))
+	float GetSpeed();
+
+	UPROPERTY(EditAnywhere, meta = (Test))
+	float TransitionAnimationSpeed = 10.0f; // Determines what speed the idle/run animation switches at
+
+	UPROPERTY(BlueprintReadOnly, EditAnywhere, meta = (Test))
+	float DistanceToHitTank = 2100.0f;
 };

@@ -47,3 +47,15 @@ float AZombieBase::TakeDamage(float DamageAmount, struct FDamageEvent const & Da
 	}
 	return DamageAmount;
 }
+
+float AZombieBase::GetTransitionAnimationSpeed()
+{
+	return TransitionAnimationSpeed;
+}
+
+float AZombieBase::GetSpeed()
+{
+	auto Velocity = this->GetVelocity();
+	float Speed = Velocity.Size();
+	return Speed;	
+}
