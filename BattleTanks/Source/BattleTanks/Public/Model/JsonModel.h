@@ -27,10 +27,11 @@ public:
 	// Find all assets for the Model Manager to preload puts meshes in one set and material in the other
 	void PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad);
 
-	// Attach this model to the Actor provided
+
+	// Attach this model to the Actor provided  returns all new components
 	TMap<FString, USceneComponent*> AttachToActor(AActor* Actor);
 
-	// Attach this model to the Component provided
+	// Attach this model to the Component provided returns all new components
 	TMap<FString, USceneComponent*> AttachToComponent(USceneComponent* Component);
 
 
@@ -63,6 +64,10 @@ private:
 
 	// Clones this model and return a new instance
 	UJsonModel* Clone();
+
+	// Method that holds the logic for attaching the models to actors
+	TMap<FString, USceneComponent*> AttachComponents(USceneComponent * root, UObject * owner, TMap<FString, USceneComponent*> AllComponents, UTankGameInstance * GameInstance);
+
 
 public:
 

@@ -183,23 +183,18 @@ void UJsonModel::PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &Mater
 	}
 }
 
-TMap<FString, USceneComponent*> UJsonModel::AttachToComponent(USceneComponent* Component)
+TMap<FString, USceneComponent*> UJsonModel::AttachComponents(USceneComponent* Root, UObject* Owner, TMap<FString, USceneComponent*> AllComponents, UTankGameInstance* GameInstance)
 {
-	TMap<FString, USceneComponent*> AllComponents; // All avaliable components on actor
-	
-	TArray< USceneComponent*> children;
-	Component->GetChildrenComponents(true,children);
-	for (auto Component : children) // Add pre-existing scene components to map above
-	{
-		USceneComponent* SceneComponent = Cast<USceneComponent>(Component);
-		if (SceneComponent)
-			AllComponents.Add(SceneComponent->GetName(), SceneComponent);
-	}
-
 	TMap<FString, USceneComponent*> AddedComponents; // All components created from this model returned by method
+
+	if (!GameInstance)
+	{
+		return AddedComponents;
+	}
+		
 	TArray<UJsonComponent*> ComponentsToAdd; // All components to make
 
-	UJsonModel* CompositeModel = BuildCompositeModel(Cast<UTankGameInstance>(Component->GetWorld()->GetGameInstance())); // get composite model for this model
+	UJsonModel* CompositeModel = BuildCompositeModel(Cast<UTankGameInstance>(GameInstance)); // get composite model for this model
 
 	CompositeModel->Components.GenerateValueArray(ComponentsToAdd); // Get components to create
 
@@ -214,7 +209,6 @@ TMap<FString, USceneComponent*> UJsonModel::AttachToComponent(USceneComponent* C
 		}
 		createdComponent = false;
 
-
 		TArray<int32> ToRemove; // Store indexes that need to be removed at end of loop
 		for (auto It = ComponentsToAdd.CreateIterator(); It; ++It) // Iterate through all components still needed to be created
 		{
@@ -222,7 +216,7 @@ TMap<FString, USceneComponent*> UJsonModel::AttachToComponent(USceneComponent* C
 			JsonComponent = BuildCompsiteComponent(CompositeModel, JsonComponent); // Build compsite component 
 			if (JsonComponent->ParentComponent.IsEmpty() || AllComponents.Contains(JsonComponent->ParentComponent)) // Check the the component that this component attaches to exists
 			{
-				USceneComponent* ComponentToAttachTo = Component; // Default to root component 
+				USceneComponent* ComponentToAttachTo = Root; // Default to root component 
 				if (!JsonComponent->ParentComponent.IsEmpty()) // Set if there is a component to attach to 
 				{
 					ComponentToAttachTo = AllComponents[JsonComponent->ParentComponent];
@@ -234,7 +228,7 @@ TMap<FString, USceneComponent*> UJsonModel::AttachToComponent(USceneComponent* C
 					SocketToAttachTo = FName(*JsonComponent->ParentSocket);
 				}
 
-				UStaticMeshComponent* Mesh = NewObject<UStaticMeshComponent>(Component, FName(*JsonComponent->Name)); // Create UStaticMeshComponent
+				UStaticMeshComponent* Mesh = NewObject<UStaticMeshComponent>(Owner, FName(*JsonComponent->Name)); // Create UStaticMeshComponent
 				Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 				if (Mesh) // register component if created if not continue loop
 				{
@@ -309,15 +303,35 @@ TMap<FString, USceneComponent*> UJsonModel::AttachToComponent(USceneComponent* C
 			{
 				// Do Nothing
 			}
-			for (auto Remove : ToRemove) // Remove created components to avoid recreating them
-			{
-				ComponentsToAdd.RemoveAt(Remove);
-			}
+		}
+		for (auto Remove : ToRemove) // Remove created components to avoid recreating them
+		{
+			ComponentsToAdd.RemoveAt(Remove);
 		}
 	}
 
 	// Return all components added from model
 	return AddedComponents;
+
+}
+
+
+
+TMap<FString, USceneComponent*> UJsonModel::AttachToComponent(USceneComponent* Component)
+{
+	TMap<FString, USceneComponent*> AllComponents; // All avaliable components on actor
+	
+	TArray< USceneComponent*> children;
+	Component->GetChildrenComponents(true,children);
+	for (auto Component : children) // Add pre-existing scene components to map above
+	{
+		USceneComponent* SceneComponent = Cast<USceneComponent>(Component);
+		if (SceneComponent)
+			AllComponents.Add(SceneComponent->GetName(), SceneComponent);
+	}
+
+	return AttachComponents(Component, Component, AllComponents, Cast<UTankGameInstance>(Component->GetWorld()->GetGameInstance()));
+
 }
 
 TMap<FString, USceneComponent*> UJsonModel::AttachToActor(AActor* Actor)
@@ -331,128 +345,8 @@ TMap<FString, USceneComponent*> UJsonModel::AttachToActor(AActor* Actor)
 			AllComponents.Add(SceneComponent->GetName(), SceneComponent);
 	}
 
-	TMap<FString, USceneComponent*> AddedComponents; // All components created from this model returned by method
-	TArray<UJsonComponent*> ComponentsToAdd; // All components to make
+	return AttachComponents(Actor->GetRootComponent(), Actor, AllComponents, Cast<UTankGameInstance>(Actor->GetWorld()->GetGameInstance()));
 
-	UJsonModel* CompositeModel = BuildCompositeModel(Cast<UTankGameInstance>(Actor->GetWorld()->GetGameInstance())); // get composite model for this model
-
-	CompositeModel->Components.GenerateValueArray(ComponentsToAdd); // Get components to create
-
-	bool createdComponent = true; // Make sure a component is made every loop
-
-	while (ComponentsToAdd.Num() > 0) // Continue to make components until there are no more
-	{
-		if (!createdComponent) // If a component was not made during last loop warn user and exit
-		{
-			UE_LOG(LogTemp, Warning, TEXT("Possible infinite loop for model: %s\n\tCheck your json file! Exiting loop for safety"), *Name)
-			break;
-		}
-		createdComponent = false;
-
-
-		TArray<int32> ToRemove; // Store indexes that need to be removed at end of loop
-		for (auto It = ComponentsToAdd.CreateIterator(); It; ++It) // Iterate through all components still needed to be created
-		{
-			auto JsonComponent = *It; 
-			JsonComponent = BuildCompsiteComponent(CompositeModel, JsonComponent); // Build compsite component 
-			if (JsonComponent->ParentComponent.IsEmpty() || AllComponents.Contains(JsonComponent->ParentComponent)) // Check the the component that this component attaches to exists
-			{
-				USceneComponent* ComponentToAttachTo = Actor->GetRootComponent(); // Default to root component 
-				if (!JsonComponent->ParentComponent.IsEmpty()) // Set if there is a component to attach to 
-				{
-					ComponentToAttachTo = AllComponents[JsonComponent->ParentComponent];
-				}
-
-				FName SocketToAttachTo = NAME_None; // Default to no socket 
-				if (!JsonComponent->ParentSocket.IsEmpty()) // Set if there is a socket to attach to 
-				{
-					SocketToAttachTo = FName(*JsonComponent->ParentSocket);
-				}
-
-				UStaticMeshComponent* Mesh = NewObject<UStaticMeshComponent>(Actor, FName(*JsonComponent->Name)); // Create UStaticMeshComponent
-				Mesh->SetCollisionEnabled(ECollisionEnabled::NoCollision);
-				if (Mesh) // register component if created if not continue loop
-				{
-					Mesh->RegisterComponent();
-					Mesh->AttachToComponent(ComponentToAttachTo, FAttachmentTransformRules::KeepRelativeTransform, SocketToAttachTo);
-				}
-				else
-				{
-					continue; // Shouldn't happen?
-				}
-
-				FString ItemMeshPath = JsonComponent->Path; // Parse mesh
-				if (ItemMeshPath.StartsWith(FString("$"))) // If mesh is an identifier
-				{
-					FString MeshID = FString(ItemMeshPath); // Remove the first character
-					MeshID.RemoveFromStart(FString("$"));
-					if (CompositeModel->Meshes.Contains(MeshID)) // Check that identifier has a mesh registered to it then set
-					{
-						ItemMeshPath = CompositeModel->Meshes[MeshID];
-					}
-					else 
-					{
-						// TODO Decide Default
-					}
-				}
-
-				auto ItemMesh = GetStaticMesh(FName(*ItemMeshPath)); // Get Mesh
-
-				if (ItemMesh) // If successfull set mesh, scale, location, rotation, and materials
-				{
-					Mesh->SetStaticMesh(ItemMesh);
-					Mesh->SetWorldScale3D(JsonComponent->Scale);
-					Mesh->SetRelativeLocationAndRotation(JsonComponent->Location, JsonComponent->Rotation);
-					for (auto& MaterialEntry : JsonComponent->Materials) 
-					{
-						FString MaterialPath = MaterialEntry.Value; // Parse material
-						if (MaterialPath.StartsWith(FString("$"))) // If material is an identifier
-						{
-							FString MaterialID = FString(MaterialPath); // Remove the first character
-							MaterialID.RemoveFromStart(FString("$"));
-							if (CompositeModel->Materials.Contains(MaterialID)) // Check that identifier has a material registered to it then set
-							{
-								MaterialPath = CompositeModel->Materials[MaterialID];
-							}
-							else
-							{
-								// TODO Decide Default
-							}
-
-						}
-
-						auto Material = GetMaterial(FName(*MaterialPath)); // Get material
-
-						if (Material) // If successful set material with proper index
-						{
-							Mesh->SetMaterial(MaterialEntry.Key, Material);
-						}
-					}
-					
-				}
-				else
-				{
-					//UE_LOG(LogTemp, Warning, TEXT("Unable to find cube?"));
-				}
-
-				AllComponents.Add(JsonComponent->Name, Mesh); // Add componet to current component map
-				AddedComponents.Add(JsonComponent->Name, Mesh); // Add component to created component map
-				ToRemove.Add(It.GetIndex()); // Add index to remove after iteration is over
-				createdComponent = true; // Mark as component created during this loop
-			}
-			else
-			{
-				// Do Nothing
-			}
-			for (auto Remove : ToRemove) // Remove created components to avoid recreating them
-			{
-				ComponentsToAdd.RemoveAt(Remove);
-			}
-		}
-	}
-
-	// Return all components added from model
-	return AddedComponents;
 }
 
 
