@@ -15,14 +15,13 @@ AZombieBase::AZombieBase()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	this->GetCapsuleComponent()->SetNotifyRigidBodyCollision(true);
-
+	this->GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AZombieBase::OnHit);
 }
 
 // Called when the game starts or when spawned
 void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
-	this->GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AZombieBase::OnHit);
 }
 
 // Called every frame

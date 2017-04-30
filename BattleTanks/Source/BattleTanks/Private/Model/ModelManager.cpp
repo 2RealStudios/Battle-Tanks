@@ -62,17 +62,22 @@ void  UModelManager::PreloadModelAssets()
 	TSet<FString> MeshesToLoad; // The meshes to load
 	TSet<FString> MaterialToLoad; // The materials to load
 	
+	MeshesToLoad.Add(FString("/Engine/BasicShapes/Cube.Cube"));
+	MaterialToLoad.Add(FString("/Game/Item/MDefault.MDefault"));
+
 	for (auto& Entry : Models) // Get all meshes and materials from all the models
 	{
 		Entry.Value->PreloadAssets(MeshesToLoad, MaterialToLoad); 
 	}
 
+	UE_LOG(LogTemp, Warning, TEXT("Preloading Models Meshes"))
 	for (auto Mesh : MeshesToLoad) // Load every mesh
 	{
 		UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Mesh)
 		UJsonModel::GetStaticMesh(FName(*Mesh));
 	}
 
+	UE_LOG(LogTemp, Warning, TEXT("Preloading Models Materials"))
 	for (auto Material : MaterialToLoad) // Load every material
 	{
 		UE_LOG(LogTemp, Warning, TEXT("\tPreloading %s"), *Material)

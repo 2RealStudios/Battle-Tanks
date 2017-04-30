@@ -17,6 +17,7 @@ class BATTLETANKS_API UJsonModel : public UObject
 	GENERATED_BODY()
 
 public:
+
 	// This models name
 	UPROPERTY()
 	FString Name = FString();
@@ -93,7 +94,7 @@ public:
 		return Cast<ObjClass>(StaticLoadObject(ObjClass::StaticClass(), NULL, *Path.ToString()));
 	}
 
-	/* 
+	/*
 		Takes a string (Format) that can be formated with one argument (ToAddToFormat)
 		Mostly here to prevent duplicate code
 		example: Format = "Hello {0}", ToAddToFormat = "World", Output = "Hello World"
@@ -107,6 +108,11 @@ public:
 		auto FormattedString = FormattedText.ToString();
 
 		return FName(*FormattedString);
+	}
+
+	static bool ConstPredicate(const int32 i, const int32 j) 
+	{
+		return i > j;
 	}
 
 };

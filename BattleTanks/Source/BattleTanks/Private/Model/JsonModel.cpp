@@ -5,7 +5,6 @@
 #include "Model/ModelManager.h"
 #include "JsonModel.h"
 
-
 void UJsonModel::LoadFromFile(FString FileName)
 {
 	FString JsonString;
@@ -249,10 +248,7 @@ TMap<FString, USceneComponent*> UJsonModel::AttachComponents(USceneComponent* Ro
 					{
 						ItemMeshPath = CompositeModel->Meshes[MeshID];
 					}
-					else
-					{
-						// TODO Decide Default
-					}
+					
 				}
 
 				auto ItemMesh = GetStaticMesh(FName(*ItemMeshPath)); // Get Mesh
@@ -273,11 +269,6 @@ TMap<FString, USceneComponent*> UJsonModel::AttachComponents(USceneComponent* Ro
 							{
 								MaterialPath = CompositeModel->Materials[MaterialID];
 							}
-							else
-							{
-								// TODO Decide Default
-							}
-
 						}
 
 						auto Material = GetMaterial(FName(*MaterialPath)); // Get material
@@ -286,12 +277,34 @@ TMap<FString, USceneComponent*> UJsonModel::AttachComponents(USceneComponent* Ro
 						{
 							Mesh->SetMaterial(MaterialEntry.Key, Material);
 						}
+						else
+						{
+							auto Default_Material = GetMaterial(FName("/Game/Item/MDefault.MDefault"));
+							if (Default_Material)
+							{
+								Mesh->SetMaterial(MaterialEntry.Key, Default_Material);
+							}
+							else
+							{
+								UE_LOG(LogTemp, Warning, TEXT("Unable to find default"))
+							}
+						}
 					}
 
 				}
-				else
+				else // Use default mesh and material
 				{
-					//UE_LOG(LogTemp, Warning, TEXT("Unable to find cube?"));
+					UStaticMesh* Default_Mesh = GetStaticMesh(FName("/Engine/BasicShapes/Cube.Cube"));
+
+					Mesh->SetStaticMesh(Default_Mesh);
+					Mesh->SetWorldScale3D(JsonComponent->Scale);
+					Mesh->SetRelativeLocationAndRotation(JsonComponent->Location, JsonComponent->Rotation);
+
+					auto Default_Material = GetMaterial(FName("/Game/Item/MDefault.MDefault"));
+					if (Default_Material)
+					{
+						Mesh->SetMaterial(0, Default_Material);
+					}
 				}
 
 				AllComponents.Add(JsonComponent->Name, Mesh); // Add componet to current component map
@@ -304,6 +317,9 @@ TMap<FString, USceneComponent*> UJsonModel::AttachComponents(USceneComponent* Ro
 				// Do Nothing
 			}
 		}
+		
+		ToRemove.Sort(UJsonModel::ConstPredicate);
+		
 		for (auto Remove : ToRemove) // Remove created components to avoid recreating them
 		{
 			ComponentsToAdd.RemoveAt(Remove);
