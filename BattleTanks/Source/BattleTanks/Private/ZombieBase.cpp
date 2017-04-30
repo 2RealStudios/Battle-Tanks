@@ -54,6 +54,7 @@ void AZombieBase::DropItem()
 		auto Action = LootManager->GetLoot(FString("zombie1"));
 		Action->doAction(this);
 	}
+	GetController()->Destroy();
 	Destroy();
 }
 
