@@ -17,7 +17,7 @@ ALootActor::ALootActor()
 	PrimaryActorTick.bCanEverTick = true;
 	CollisionBox = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Collision Box"));
 	SetRootComponent(CollisionBox);
-	CollisionBox->bGenerateOverlapEvents = true;
+	CollisionBox->bGenerateOverlapEvents = false;
 	CollisionBox->SetVisibility(false);
 	CollisionBox->SetCollisionProfileName(TEXT("Custom"));
 	CollisionBox->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
@@ -71,7 +71,7 @@ void ALootActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class
 void ALootActor::BeginPlay()
 {
 	Super::BeginPlay();
-
+	CollisionBox->bGenerateOverlapEvents = true;
 }
 
 // Called every frame
