@@ -15,6 +15,8 @@ class BATTLETANKS_API UItem : public UObject
 	GENERATED_BODY()
 
 public:
+
+	// Called when a tank is colliding with a loot actor representing this item
 	virtual void OnCollide(ATank* Actor);
 };
 

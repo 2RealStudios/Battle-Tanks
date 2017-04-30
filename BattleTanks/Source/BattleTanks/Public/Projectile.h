@@ -17,6 +17,7 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Send the projectile flying at the given speed
 	void LaunchProjectile(float Speed);
 
 

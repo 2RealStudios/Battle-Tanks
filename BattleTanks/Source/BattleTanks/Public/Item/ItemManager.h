@@ -32,6 +32,7 @@ public:
 	UFUNCTION(BlueprintCallable, Category = "Item")
 	FString GetItemName(UItem* Item);
 
+	// Initialize this manager i.e. add items to map
 	void Init(UTankGameInstance* GameInstance);
 
 private:

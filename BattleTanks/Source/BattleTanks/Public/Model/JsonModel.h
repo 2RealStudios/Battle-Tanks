@@ -19,7 +19,7 @@ class BATTLETANKS_API UJsonModel : public UObject
 public:
 	// This models name
 	UPROPERTY()
-		FString Name = FString();
+	FString Name = FString();
 
 	// Load this model from the file provided
 	void LoadFromFile(FString FileName);
@@ -36,26 +36,27 @@ private:
 
 	// This models parent model
 	UPROPERTY()
-		FString Parent = FString();
+	FString Parent = FString();
 
 	// Holds unquie identifiers of material paths, useful for extending a model via the parent model
 	UPROPERTY()
-		TMap<FString, FString> Materials;
+	TMap<FString, FString> Materials;
 
 	// Holds unquie identifiers of mesh paths, useful for extending a model via the parent model
 	UPROPERTY()
-		TMap<FString, FString> Meshes;
+	TMap<FString, FString> Meshes;
 
 	// Holds the references to the components this model will have
 	UPROPERTY()
-		TMap<FString, UJsonComponent*> Components;
+	TMap<FString, UJsonComponent*> Components;
 
 	// Builds a Model based on the parent model of this model
 	UJsonModel* BuildCompositeModel(UTankGameInstance* GameInstance);
 
-	//
+	// Builds a compsite component that takes in to account all the parenting during creation
 	UJsonComponent* BuildCompsiteComponent(UJsonModel* Model, UJsonComponent* JsonComponent);
 
+	// Builds a compsite component that takes in to account all the parenting during creation
 	UJsonComponent* BuildCompsiteComponent(UJsonComponent* Parent, UJsonComponent* JsonComponent);
 
 	// Clones this model and return a new instance
