@@ -27,9 +27,11 @@ public:
 	// Find all assets for the Model Manager to preload puts meshes in one set and material in the other
 	void PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad);
 
-	// Attach this model to the LootActor provided
+	// Attach this model to the Actor provided
 	TMap<FString, USceneComponent*> AttachToActor(AActor* Actor);
 
+	// Attach this model to the Component provided
+	TMap<FString, USceneComponent*> AttachToComponent(USceneComponent* Component);
 
 
 private:
