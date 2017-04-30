@@ -40,6 +40,7 @@ private:
 	void OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult);
 	
 	// The item this actor is representing
+	UPROPERTY()
 	UItem* Item;
 
 	// How long has this actor been alive, used to make actor oscillate 

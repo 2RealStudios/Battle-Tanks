@@ -15,7 +15,6 @@ AZombieBase::AZombieBase()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	this->GetCapsuleComponent()->SetNotifyRigidBodyCollision(true);
-	this->GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AZombieBase::OnHit);
 
 }
 
@@ -23,7 +22,7 @@ AZombieBase::AZombieBase()
 void AZombieBase::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	this->GetCapsuleComponent()->OnComponentHit.AddDynamic(this, &AZombieBase::OnHit);
 }
 
 // Called every frame
@@ -79,7 +78,7 @@ void AZombieBase::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, U
 	{
 		if(Tank->GetVelocity().Size() > 0)
 		{
-			Destroy();
+			DropItem();
 		}
 	}
 }
