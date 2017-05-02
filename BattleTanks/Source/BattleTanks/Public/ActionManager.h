@@ -33,6 +33,7 @@ public:
 	// Get the "empty" action reference
 	UAction* GetEmpty();
 
+	// Init this manager i.e. add actions to map
 	void Init(UTankGameInstance* GameInstance);
 
 private:

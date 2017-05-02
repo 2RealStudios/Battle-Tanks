@@ -17,9 +17,10 @@ class BATTLETANKS_API UJsonModel : public UObject
 	GENERATED_BODY()
 
 public:
+
 	// This models name
 	UPROPERTY()
-		FString Name = FString();
+	FString Name = FString();
 
 	// Load this model from the file provided
 	void LoadFromFile(FString FileName);
@@ -27,39 +28,47 @@ public:
 	// Find all assets for the Model Manager to preload puts meshes in one set and material in the other
 	void PreloadAssets(TSet<FString> &MeshesToLoad, TSet<FString> &MaterialToLoad);
 
-	// Attach this model to the LootActor provided
+
+	// Attach this model to the Actor provided  returns all new components
 	TMap<FString, USceneComponent*> AttachToActor(AActor* Actor);
 
+	// Attach this model to the Component provided returns all new components
+	TMap<FString, USceneComponent*> AttachToComponent(USceneComponent* Component);
 
 
 private:
 
 	// This models parent model
 	UPROPERTY()
-		FString Parent = FString();
+	FString Parent = FString();
 
 	// Holds unquie identifiers of material paths, useful for extending a model via the parent model
 	UPROPERTY()
-		TMap<FString, FString> Materials;
+	TMap<FString, FString> Materials;
 
 	// Holds unquie identifiers of mesh paths, useful for extending a model via the parent model
 	UPROPERTY()
-		TMap<FString, FString> Meshes;
+	TMap<FString, FString> Meshes;
 
 	// Holds the references to the components this model will have
 	UPROPERTY()
-		TMap<FString, UJsonComponent*> Components;
+	TMap<FString, UJsonComponent*> Components;
 
 	// Builds a Model based on the parent model of this model
 	UJsonModel* BuildCompositeModel(UTankGameInstance* GameInstance);
 
-	//
+	// Builds a compsite component that takes in to account all the parenting during creation
 	UJsonComponent* BuildCompsiteComponent(UJsonModel* Model, UJsonComponent* JsonComponent);
 
+	// Builds a compsite component that takes in to account all the parenting during creation
 	UJsonComponent* BuildCompsiteComponent(UJsonComponent* Parent, UJsonComponent* JsonComponent);
 
 	// Clones this model and return a new instance
 	UJsonModel* Clone();
+
+	// Method that holds the logic for attaching the models to actors
+	TMap<FString, USceneComponent*> AttachComponents(USceneComponent * root, UObject * owner, TMap<FString, USceneComponent*> AllComponents, UTankGameInstance * GameInstance);
+
 
 public:
 
@@ -85,7 +94,7 @@ public:
 		return Cast<ObjClass>(StaticLoadObject(ObjClass::StaticClass(), NULL, *Path.ToString()));
 	}
 
-	/* 
+	/*
 		Takes a string (Format) that can be formated with one argument (ToAddToFormat)
 		Mostly here to prevent duplicate code
 		example: Format = "Hello {0}", ToAddToFormat = "World", Output = "Hello World"
@@ -99,6 +108,11 @@ public:
 		auto FormattedString = FormattedText.ToString();
 
 		return FName(*FormattedString);
+	}
+
+	static bool ConstPredicate(const int32 i, const int32 j) 
+	{
+		return i > j;
 	}
 
 };

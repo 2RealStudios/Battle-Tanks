@@ -14,6 +14,8 @@ class BATTLETANKS_API UJsonComponent : public UObject
 	GENERATED_BODY()
 	
 public:
+
+	// The component this one is extends, Empty if no parent
 	UPROPERTY()
 	FString Parent = FString();
 
@@ -49,6 +51,7 @@ public:
 	UPROPERTY()
 	FString ParentSocket = FString();
 
+	// Creates a clone of this component
 	UJsonComponent* Clone();
 	
 };

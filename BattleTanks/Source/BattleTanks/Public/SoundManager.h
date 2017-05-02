@@ -16,15 +16,18 @@ class BATTLETANKS_API USoundManager : public UObject
 	GENERATED_BODY()
 	
 public:
-
+	// Init this manager i.e. add sounds to map
 	void Init(UTankGameInstance* GameInstance);
 
+	// Play sound
 	UFUNCTION(BlueprintCallable, Category = "Sound")
 	void PlaySound(FString SoundName, const UObject* WorldContextObject, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundConcurrency* ConcurrencySettings = nullptr);
 
+	// Play sound at provided location
 	UFUNCTION(BlueprintCallable, Category = "Sound")
 	void PlaySoundAt(FString SoundName, const UObject* WorldContextObject, FVector Location, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundAttenuation* AttenuationSettings = nullptr, class USoundConcurrency* ConcurrencySettings = nullptr);
 	
+	// Play sound at provided location with rotation
 	UFUNCTION(BlueprintCallable, Category = "Sound")
 	void PlaySoundAtR(FString SoundName, const UObject* WorldContextObject, FVector Location, FRotator Rotation, float VolumeMultiplier = 1.f, float PitchMultiplier = 1.f, float StartTime = 0.f, class USoundAttenuation* AttenuationSettings = nullptr, class USoundConcurrency* ConcurrencySettings = nullptr);
 
@@ -33,8 +36,10 @@ private:
 	UPROPERTY()
 	TMap<FString, USoundBase*> Sounds;
 	
+	// Load all the sounds
 	TMap<FString, USoundBase*> LoadSounds();
 
+	// Get the sound assoictated with name
 	USoundBase* GetSound(FString SoundName);
 
 

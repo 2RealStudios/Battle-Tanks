@@ -20,11 +20,20 @@ class BATTLETANKS_API UTankGameInstance : public UGameInstance
 
 public:
 	UTankGameInstance();
-
+	
+	// Get the Loot Manager
 	ULootManager* GetLootManager();
+
+	// Get the Action Manager
 	UActionManager* GetActionManager();
+	
+	// Get the Item Manager
 	UItemManager* GetItemManager();
+	
+	// Get the Model Manager
 	UModelManager* GetModelManager();
+	
+	// Get the Sound Manager
 	USoundManager* GetSoundManager();
 
 protected:

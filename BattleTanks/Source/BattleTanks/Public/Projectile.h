@@ -17,6 +17,7 @@ public:
 	// Called when the game starts or when spawned
 	virtual void BeginPlay() override;
 
+	// Send the projectile flying at the given speed
 	void LaunchProjectile(float Speed);
 
 
@@ -30,7 +31,7 @@ private:
 	float ProjectileDamage = 20.0F;
 
 	UPROPERTY(EditDefaultsOnly, Category = "Setup")
-	float DestroyDelay = 10.0F;
+	float DestroyDelay = 1.0F;
 
 	UProjectileMovementComponent* ProjectileMovementComponent = nullptr;
 	

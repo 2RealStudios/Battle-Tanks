@@ -29,6 +29,7 @@ public:
 	// Sets the action manager for a local reference
 	void SetActionManager(UActionManager* ActionManagerToSet);
 	
+	// Init this manager i.e. add loot tables to map
 	void Init(UTankGameInstance* GameInstance);
 
 private:

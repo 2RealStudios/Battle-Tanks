@@ -34,7 +34,6 @@ ALootActor::ALootActor()
 		CollisionBox->SetStaticMesh(Cube.Object);
 	}
 
-	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ALootActor::OnOverlapBegin);
 }
 
 void ALootActor::SetItem(UItem* ItemToSet)
@@ -59,8 +58,9 @@ void ALootActor::SetItem(UItem* ItemToSet)
 void ALootActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class AActor* OtherActor, class UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
 	ATank* Tank = Cast<ATank>(OtherActor);
-	if (Tank)
+	if (Item && Tank)
 	{
+		CollisionBox->OnComponentBeginOverlap.RemoveDynamic(this, &ALootActor::OnOverlapBegin);
 		Item->OnCollide(Tank);
 		Destroy();
 	}
@@ -71,12 +71,18 @@ void ALootActor::OnOverlapBegin(class UPrimitiveComponent* OverlappedComp, class
 void ALootActor::BeginPlay()
 {
 	Super::BeginPlay();
+	CollisionBox->OnComponentBeginOverlap.AddDynamic(this, &ALootActor::OnOverlapBegin);
 
 }
 
 // Called every frame
 void ALootActor::Tick(float DeltaTime)
 {
+	if (!Item)
+	{
+		Destroy();
+	}
+
 	Super::Tick(DeltaTime);
 
 	float Speed = 2.f;

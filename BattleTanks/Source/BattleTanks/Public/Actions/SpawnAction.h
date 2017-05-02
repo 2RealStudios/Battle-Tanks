@@ -19,7 +19,7 @@ public:
 	// The item that will be spawned in to the world
 	UItem* ItemToSpawn;
 
-	// Preform the action that the provided Actor happened to get
+	// Preform the action that the provided Actor happened to get The AActor 
 	virtual void doAction(AActor* ActorCalling) override;
 
 	

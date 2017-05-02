@@ -37,4 +37,10 @@ public:
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, meta = (Test))
 	float DistanceToHitTank = 2100.0f;
+
+	UFUNCTION()
+	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);
+	
+	void DropItem();
+
 };
