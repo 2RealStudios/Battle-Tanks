@@ -36,7 +36,8 @@ public:
 	float TransitionAnimationSpeed = 10.0f; // Determines what speed the idle/run animation switches at
 
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, meta = (Test))
-	float DistanceToHitTank = 2100.0f;
+
+	float DistanceToHitTank = 210.0f;
 
 	UFUNCTION()
 	void OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComponent, FVector NormalImpulse, const FHitResult& Hit);

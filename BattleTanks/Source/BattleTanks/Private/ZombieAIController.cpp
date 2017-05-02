@@ -14,7 +14,7 @@ void AZombieAIController::Tick(float DeltaTime)
 	}
 
 	// Move towards the player
-	MoveToActor(PlayerTank, 2000);
+	MoveToActor(PlayerTank, 200);
 }
 
 
