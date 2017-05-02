@@ -30,11 +30,14 @@ public:
 	// Sets default values for this component's properties
 	UTankAimingComponent();
 
+	// Aim at location passed
 	void AimAt(FVector HitLocation);
 
+	// Initialise the aiming component
 	UFUNCTION(BlueprintCallable, Category = "Setup")
 	void Initialise(UTankBarrel* BarrelToSet, UTankTurret* TurretToSet);
 
+	// Fire a round
 	UFUNCTION(BlueprintCallable, Category = "Firing")
 	void Fire(int32 RoundsLeft);
 

@@ -27,7 +27,9 @@ public:
 	// Preload the model assets (mesh, materials, etc.) so there is no delay when the model is being used
 	void PreloadModelAssets();
 
+	// Initialize this manager i.e. add models to map
 	void Init(UTankGameInstance* GameInstance);
+
 private:
 	// The map holding all references to the mdoels
 	UPROPERTY()
