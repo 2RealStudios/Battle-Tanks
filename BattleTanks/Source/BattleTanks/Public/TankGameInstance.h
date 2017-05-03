@@ -36,6 +36,10 @@ public:
 	// Get the Sound Manager
 	USoundManager* GetSoundManager();
 
+	// Number of Zombie Kills
+	UPROPERTY(BlueprintReadOnly, Category = "Gameplay" )
+	int32 Kills = 0;
+
 protected:
 	virtual void  Init() override;
 

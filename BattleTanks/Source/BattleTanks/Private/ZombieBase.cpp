@@ -48,10 +48,12 @@ void AZombieBase::DropItem()
 	UTankGameInstance* GameInstance = Cast<UTankGameInstance>(GetGameInstance());
 	if (GameInstance)
 	{
-		UE_LOG(LogTemp, Warning, TEXT("Drop Item"))
+		//UE_LOG(LogTemp, Warning, TEXT("Drop Item"))
 		auto LootManager = GameInstance->GetLootManager();
 		auto Action = LootManager->GetLoot(FString("zombie1"));
 		Action->doAction(this);
+		GameInstance->Kills++;
+		//UE_LOG(LogTemp, Warning, TEXT("Kills: %d"), GameInstance->Kills)
 	}
 	GetController()->Destroy();
 	Destroy();
