@@ -5,10 +5,10 @@
     },
     {
         "name": "loot:ammo",
-        "weight": 1
+        "weight": 4
     },
     {
         "name": "empty",
-        "weight": 1
+        "weight": 9
     }
 ]
