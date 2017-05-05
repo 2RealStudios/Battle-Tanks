@@ -23,9 +23,8 @@ bool UActionManager::AddActions(UItemManager* ItemManagerToSet)
 	AddEmpty();
 
 	//int amounts[] = { 1, 5, 10, 20 };
-	//int AmmoAmounts[] = { 1, 5, 10, 20 };
 
-	int AmmoAmounts[] = { 1, 5, 10 };
+	int AmmoAmounts[] = { 1, 5, 10, 20 };
 	for (int amount : AmmoAmounts)
 	{
 		FString AmmoName = FString("ammo") + FString::FromInt(amount);
